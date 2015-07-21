@@ -67,4 +67,27 @@ INSERT INTO `categories` VALUES (0,'new member',10),(1,'bronze',15),(2,'silver',
 UNLOCK TABLES;
 
 
+CREATE TABLE `orders` (
+  `id` int NOT NULL,
+  `prodId` int NOT NULL,
+  `time` int NOT NULL,
+   PRIMARY KEY (`id`, `prodId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `orders` WRITE;
+UNLOCK TABLES;
+
+
+CREATE TABLE `productDiscount`(
+	`prodId` int NOT NULL,
+	`catId` int NOT NULL,
+	PRIMARY KEY (`prodId`, `catId`)
+)ENGINE=InnoDB DEFAULT CHARSET = latin1;
+
+LOCK TABLES `productDiscount` WRITE;
+UNLOCK TABLES;
+
+
+
+
 
