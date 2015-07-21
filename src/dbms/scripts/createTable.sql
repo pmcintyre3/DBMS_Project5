@@ -50,7 +50,7 @@ CREATE TABLE `categories` (
  
 
 LOCK TABLES `categories` WRITE;
-INSERT INTO `categories` VALUES (1,70,'file','nike',10),(2,70,'file','adidas',10),(3,70,'file','new balance',10),(4,70,'file','puma',10),(5,70,'file','asics',10),(6,70,'file','fila',10);
+INSERT INTO `categories` VALUES (0,'new member',10),(1,'bronze',15),(2,'silver',20),(3,'gold',25);
 UNLOCK TABLES;
 
 
