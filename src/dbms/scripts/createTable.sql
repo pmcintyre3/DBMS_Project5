@@ -20,7 +20,23 @@ CREATE TABLE `users` (
 --
 
 LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES (1,'admin','password',1,true),(2,'phillip','passmc',2,false),(3,'narita','passpa',3,false),(4,'jey','passjo',1,false),(5,'justin','passtu',2,false),(6,'ryan','passpe',1,false);
+INSERT INTO `users` VALUES ('1','admin','password',1,true),('2','phillip','passmc',2,false),('3','narita','passpa',3,false),('4','jey','passjo',1,false),('5','justin','passtu',2,false),('6','ryan','passpe',1,false);
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `points`;
+CREATE TABLE `points` (
+  `userId` char(50) NOT NULL,
+  `points` int NOT NULL,
+  -- `created` varchar(255) NOT NULL,
+  PRIMARY KEY (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `course`
+--
+
+LOCK TABLES `points` WRITE;
+INSERT INTO `points` VALUES ('1',100),('2',90),('3',80),('4',70),('5',60),('6',50);
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `products`;
