@@ -1,5 +1,3 @@
-
-
 --
 -- Table structure for table `course`
 --
@@ -36,11 +34,10 @@ CREATE TABLE `products` (
  
 
 LOCK TABLES `products` WRITE;
-INSERT INTO `products` VALUES (1,70,'file','nike',10),(2,70,'file','adidas',10),(3,70,'file','new balance',10),(4,70,'file','puma',10),(5,70,'file','asics',10),(6,70,'file','fila',10);
+INSERT INTO `products` VALUES (1,70,'bootstrap/images/pic.jpg','nike',10),(2,70,'bootstrap/images/pic1.jpg','adidas',10),(3,70,'bootstrap/images/pic2.jpg','new balance',10),(4,70,'bootstrap/images/pic3.jpg','puma',10),(5,70,'bootstrap/images/pic4.jpg','asics',10),(6,70,'bootstrap/images/pic5.jpg','fila',10);
 UNLOCK TABLES;
 
-DROP TABLE IF EXISTS `products`;
-
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -50,7 +47,7 @@ CREATE TABLE `categories` (
  
 
 LOCK TABLES `categories` WRITE;
-INSERT INTO `categories` VALUES (1,70,'file','nike',10),(2,70,'file','adidas',10),(3,70,'file','new balance',10),(4,70,'file','puma',10),(5,70,'file','asics',10),(6,70,'file','fila',10);
+INSERT INTO `categories` VALUES (1,'noDiscount',0),(2,'Silver',10),(3,'Gold',25);
 UNLOCK TABLES;
 
 
