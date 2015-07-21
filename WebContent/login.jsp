@@ -81,7 +81,11 @@
 						<legend>Registered Customers</legend>
 						<div class="bs-component" id="loginError">
 							<% String login_msg=(String)request.getAttribute("error");
-								if(login_msg!=null) out.println("<div class='alert alert-dismissible alert-danger'><button type='button' class='close' data-dismiss='alert'>×</button>"+login_msg+".</div>");
+								if(login_msg!=null){ 
+									out.println("<div class='alert alert-dismissible alert-danger'>"
+												+"<button type='button' class='close' data-dismiss='alert'>×</button>"
+												+login_msg+".</div>");
+								}
 							%>
 							
 						</div>

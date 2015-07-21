@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dbms.dao.LoginDao;
+import dbms.dao.ProductDao;
+import dbms.model.Product;
 
 /**
  * Servlet implementation class LoginServlet
@@ -70,7 +72,10 @@ public class LoginServlet extends HttpServlet {
 				response.addCookie(cookieUserName);
 
 				// Send the successful response
-				response.sendRedirect("loginSuccess.jsp");
+				//response.sendRedirect("loginSuccess.jsp");
+				request.setAttribute("productList",ProductDao.getAllProducts(0));
+				RequestDispatcher rd = request.getRequestDispatcher("loginSuccess.jsp");
+				rd.forward(request, response);
 
 			} else {
 				request.setAttribute("error","Invalid Username or Password. Please try again.");
