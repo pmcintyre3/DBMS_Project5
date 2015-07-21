@@ -43,7 +43,7 @@
 				</div>
 				<div class="col-md-2 pull-right"
 					style="padding-left: 2px; font-size: 16px; text-align: right;">
-					<a href="login.html">Sign IN / Register</a>
+					<a href="login.jsp">Sign IN / Register</a>
 				</div>
 			</div>
 			<nav>
@@ -81,8 +81,7 @@
 						<legend>Registered Customers</legend>
 						<div class="bs-component" id="loginError">
 							<% String login_msg=(String)request.getAttribute("error");
-								if(login_msg!=null) out.println("
-								<div class='alert alert-dismissible alert-danger'><button type='button' class='close' data-dismiss='alert'>Ã—</button>"+login_msg+".</div>");
+								if(login_msg!=null) out.println("<div class='alert alert-dismissible alert-danger'><button type='button' class='close' data-dismiss='alert'>×</button>"+login_msg+".</div>");
 							%>
 							
 						</div>

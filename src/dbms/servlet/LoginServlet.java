@@ -73,10 +73,9 @@ public class LoginServlet extends HttpServlet {
 				response.sendRedirect("loginSuccess.jsp");
 
 			} else {
-				out.print("<p style=\"color:red\">Sorry username or password error</p>");
-				request.setAttribute("error","Invalid Username or Password");
+				request.setAttribute("error","Invalid Username or Password. Please try again.");
 				RequestDispatcher rd = request
-						.getRequestDispatcher("/login.html");
+						.getRequestDispatcher("/login.jsp");
 				rd.include(request, response);
 			}
 		} catch (Exception e) {
