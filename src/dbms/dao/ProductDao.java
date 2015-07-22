@@ -68,4 +68,57 @@ public class ProductDao {
 		
 		return productList;  
 	}
+	
+	public static Product getProduct(int productID,int categoryID) {
+		boolean status = false;
+		int id=-1;
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		Product product = null;
+		
+		try {
+				Class.forName(driver).newInstance();
+				conn = DriverManager
+						.getConnection(url + dbName, userName, password);
+				pst = conn.prepareStatement("select id,productName, productDescription,productImg from product where id=?");
+				pst.setInt(1, productID);
+				rs = pst.executeQuery();
+				while(rs.next()){
+					product =new Product(rs.getInt("id"),
+                            					rs.getString("productName"),
+                            					rs.getString("productDescription"),
+                            					rs.getString("productImg")
+                            			);
+				}
+			} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			
+			if (conn != null) {
+				try {
+					conn.close();
+				
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pst != null) {
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return product;  
+	}
 }

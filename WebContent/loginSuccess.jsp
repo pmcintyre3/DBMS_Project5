@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+    <c:set var="base" value="${fn:substring(url, 0, fn:length(url) - fn:length(req.requestURI))}${req.contextPath}/" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +74,7 @@
 					%>
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"
 						role="button" aria-expanded="false"
-						style="text-transform: capitalize;"><b><%= userName %></b>
+						style="text-transform: capitalize;"><b><%= user %></b>
 						&nbsp; <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="#">My Orders</a></li>
@@ -112,7 +114,7 @@
 								<p>
 									${article.productDescription} </p>
 								<p>
-									<a class="btn btn-primary" href="#" role="button">View
+									<a class="btn btn-primary" href="http://localhost:8080/DBMS_Project5/ProductServlet?productID=${article.productID}" role="button">View
 									details &raquo;</a>
 								</p>
 							</div>
