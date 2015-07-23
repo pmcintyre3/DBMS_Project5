@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `userID` int NOT NULL,
@@ -13,7 +12,7 @@ CREATE TABLE `users` (
 
 
 -- LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES ('1','admin','password',1,true),('2','phillip','passmc',2,false),('3','narita','passpa',3,false),('4','jey','passjo',1,false),('5','justin','passtu',2,false),('6','ryan','passpe',1,false);
+INSERT INTO `users` VALUES (1,'admin','password',1,true,'2015-07-22 12:00:00'),(2,'phillip','passmc',2,false,'2015-07-22 12:00:00'),(3,'narita','passpa',3,false,'2015-07-22 12:00:00'),(4,'jey','passjo',1,false,'2015-07-22 12:00:00'),(5,'justin','passtu',2,false,'2015-07-22 12:00:00'),(6,'ryan','passpe',1,false,'2015-07-22 12:00:00');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `points`;
@@ -26,7 +25,7 @@ CREATE TABLE `points` (
 
 
 -- LOCK TABLES `points` WRITE;
-INSERT INTO `points` VALUES ('1',100),('2',90),('3',80),('4',70),('5',60),('6',50);
+INSERT INTO `points` VALUES (1,100),(2,90),(3,80),(4,70),(5,60),(6,50);
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `products`;
@@ -44,7 +43,7 @@ CREATE TABLE `products` (
  
 
 -- LOCK TABLES `products` WRITE;
-INSERT INTO `products` VALUES (1,70,'bootstrap/images/pic.jpg','nike',10,1),(2,70,'bootstrap/images/pic1.jpg','adidas',10,2),(3,70,'bootstrap/images/pic2.jpg','new balance',10,3),(4,70,'bootstrap/images/pic3.jpg','puma',10,1),(5,70,'bootstrap/images/pic4.jpg','asics',10,2),(6,70,'bootstrap/images/pic5.jpg','fila',10,3);
+INSERT INTO `products` VALUES (1,70,'bootstrap/images/pic.jpg','nike','lorem ipsum shoe',10,1),(2,70,'bootstrap/images/pic1.jpg','adidas','lorem ipsum shoe',10,2),(3,70,'bootstrap/images/pic2.jpg','new balance','lorem ipsum shoe',10,3),(4,70,'bootstrap/images/pic3.jpg','puma','lorem ipsum shoe',10,1),(5,70,'bootstrap/images/pic4.jpg','asics','lorem ipsum shoe',10,2),(6,70,'bootstrap/images/pic5.jpg','fila','lorem ipsum shoe',10,3);
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `categories`;
@@ -80,9 +79,3 @@ CREATE TABLE `orderDetails` (
 
 -- LOCK TABLES `orderDetails` WRITE;
 UNLOCK TABLES;
-
-
-
-
-
-
