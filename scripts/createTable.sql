@@ -1,13 +1,13 @@
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` char(50) NOT NULL,
-  `user` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `catId` int NOT NULL,
-  `admin` boolean NOT NULL,
-  -- `createdOn` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  `userID` int NOT NULL,
+  `userName` varchar(255) NOT NULL,
+  `userPassword` varchar(255) NOT NULL,
+  `userCategoryID` int NOT NULL,
+  `isAdmin` boolean NOT NULL,
+  `createdOn` datetime NOT NULL
+  PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -17,7 +17,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `points`;
 CREATE TABLE `points` (
-  `userId` char(50) NOT NULL,
+  `userID` int NOT NULL,
   `points` int NOT NULL,
   -- `created` varchar(255) NOT NULL,
   PRIMARY KEY (`userId`)
@@ -31,13 +31,14 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `products`;
 
 CREATE TABLE `products` (
-  `id` int(11) NOT NULL,
-  `price` int NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `points` int NOT NULL,
-  `catId` int NOT NULL,
-  PRIMARY KEY (`id`)
+  `productID` int NOT NULL,
+  `productPrice` int NOT NULL,
+  `productImage` varchar(255) NOT NULL,
+  `productName` varchar(255) NOT NULL,
+  `productDescription` varchar(1000) NOT NULL,
+  `productPoints` int NOT NULL,
+  `productCategoryID` int NOT NULL,
+  PRIMARY KEY (`productID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
  
 
@@ -47,10 +48,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
-  `id` int NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `discount` int NOT NULL,
-  PRIMARY KEY (`id`)
+  `categoryID` int NOT NULL,
+  `categoryName` varchar(255) NOT NULL,
+  `categoryDiscount` int NOT NULL,
+  PRIMARY KEY (`categoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
  
 
@@ -60,10 +61,10 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
-  `id` int NOT NULL,
-  `prodId` int NOT NULL,
-  `createdOn` int NOT NULL,
-   PRIMARY KEY (`id`, `prodId`)
+  `userID` int NOT NULL,
+  `productID` int NOT NULL,
+  `orderedOn` int NOT NULL,
+  -- PRIMARY KEY (`id`, `prodId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- LOCK TABLES `orders` WRITE;
