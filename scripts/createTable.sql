@@ -6,7 +6,8 @@ CREATE TABLE `users` (
   `userPassword` varchar(255) NOT NULL,
   `userCategoryID` int NOT NULL,
   `isAdmin` boolean NOT NULL,
-  `createdOn` datetime NOT NULL
+  `createdOn` datetime NOT NULL,
+  UNIQUE(`userName`),
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
