@@ -6,6 +6,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `catId` int NOT NULL,
   `admin` boolean NOT NULL,
+  -- `createdOn` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
