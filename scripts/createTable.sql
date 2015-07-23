@@ -61,13 +61,30 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
+<<<<<<< Updated upstream
   `userID` int NOT NULL,
   `productID` int NOT NULL,
   `orderedOn` int NOT NULL,
   -- PRIMARY KEY (`id`, `prodId`)
+=======
+  `userId` int NOT NULL,
+  `orderId` int NOT NULL,
+  `orderedOn` int NOT NULL,
+   PRIMARY KEY (`userId`, `orderId`)
+>>>>>>> Stashed changes
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- LOCK TABLES `orders` WRITE;
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `orderDetails`;
+CREATE TABLE `orderDetails` (
+  `orderNumber` int NOT NULL,
+  `prodId` int NOT NULL,
+   PRIMARY KEY (`orderNumber`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- LOCK TABLES `orderDetails` WRITE;
 UNLOCK TABLES;
 
 
