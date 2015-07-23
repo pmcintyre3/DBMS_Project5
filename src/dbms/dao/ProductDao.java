@@ -15,7 +15,7 @@ public class ProductDao {
 	static String dbName = "test";
 	static String driver = "com.mysql.jdbc.Driver";
 	static String userName = "root";
-	static String password = "root";
+	static String password = "";
 
 	public static List<Product> getAllProducts(int categoryID) {
 		boolean status = false;
