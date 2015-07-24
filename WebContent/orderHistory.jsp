@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-    <c:set var="base" value="${fn:substring(url, 0, fn:length(url) - fn:length(req.requestURI))}${req.contextPath}/" />
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="base"
+	value="${fn:substring(url, 0, fn:length(url) - fn:length(req.requestURI))}${req.contextPath}/" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,17 +30,17 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-	<style>
-		#logoutFormLink {
-          	display: block;
-  			padding: 3px 20px;
-  			clear: both;
-  			font-weight: normal;
-  			line-height: 1.42857143;
-  			color: rgb(123, 138, 139);
-  			white-space: nowrap;
-		}
-	</style>
+<style>
+#logoutFormLink {
+	display: block;
+	padding: 3px 20px;
+	clear: both;
+	font-weight: normal;
+	line-height: 1.42857143;
+	color: rgb(123, 138, 139);
+	white-space: nowrap;
+}
+</style>
 </head>
 
 <body>
@@ -59,28 +60,31 @@
 					<%
 						//allow access only if session exists
 						String user = null;
-						if(session.getAttribute("user") == null){
+						if (session.getAttribute("user") == null) {
 							response.sendRedirect("login.html");
-						}else user = (String) session.getAttribute("user");
+						} else
+							user = (String) session.getAttribute("user");
 						String userName = null;
 						String sessionID = null;
 						Cookie[] cookies = request.getCookies();
-						if(cookies !=null){
-						for(Cookie cookie : cookies){
-							if(cookie.getName().equals("user")) userName = cookie.getValue();
-							if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
-						}
+						if (cookies != null) {
+							for (Cookie cookie : cookies) {
+								if (cookie.getName().equals("user"))
+									userName = cookie.getValue();
+								if (cookie.getName().equals("JSESSIONID"))
+									sessionID = cookie.getValue();
+							}
 						}
 					%>
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"
 						role="button" aria-expanded="false"
-						style="text-transform: capitalize;"><b><%= user %></b>
-						&nbsp; <span class="caret"></span></a>
+						style="text-transform: capitalize;"><b><%=user%></b> &nbsp; <span
+						class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="http://localhost:8080/DBMS_Project5/OrderServlet">My Orders</a></li>
+						<li><a href="#">My Orders</a></li>
 						<li class="divider"></li>
 						<li>
-							<form action="LogoutServlet" method="post" >
+							<form action="LogoutServlet" method="post">
 								<a id="logoutFormLink" href="#" value="Logout"
 									onclick="$(this).closest('form').submit();">&nbsp; Logout </a>
 							</form>
@@ -101,27 +105,43 @@
 			</nav>
 
 		</div>
-
 		<div class="row">
-			<c:forEach items="${productList}" var="article">
-    			
-    			<div class='col-md-4'>
-							<br />
-							<div class='thumbnail'>
-								<img class='img-responsive' src='${article.productImage}' } alt=''>
-								<div class='caption'>
-									<h3>${article.productName}<br /></h3>
-								<p>
-									${article.productDescription} </p>
-								<p>
-									<a class="btn btn-primary" href="http://localhost:8080/DBMS_Project5/ProductServlet?productID=${article.productID}" role="button">View
-									details &raquo;</a>
-								</p>
+			<br />
+			<div class="col-md-10">
+				<h4>Total Points:${totalUserPoints}</h4>
+			</div>
+		</div>
+		<div class="row">
+			<c:forEach items="${userOrderList}" var="product">
+
+				<div class='col-md-6'>
+					<br />
+					<div class='thumbnail'>
+						<img class='img-responsive' src='${product.productImage}' } alt=''>
+						<div class='caption'>
+							<div class="row">
+								<div class="col-md-12">
+									<h3>${product.productName}<br />
+									</h3>
+									<p>${product.productDescription}</p>
+								</div>
 							</div>
-						</div>		
+							<div class="row">
+								<div class="col-md-6">
+									<h5>Original Price: $${product.productPrice}.00</h5>
+									<h5>Ordered On: ${product.orderedOn}</h5>
+								</div>
+								<div class="col-md-6">
+									<h5>Discounted Price: $${product.discountedPrice}.00</h5>
+									<h5>Points : ${product.productPoints}</h5>
+								</div>
+							</div>
+
+						</div>
+					</div>
 				</div>
-							
-  			</c:forEach>
+
+			</c:forEach>
 
 		</div>
 

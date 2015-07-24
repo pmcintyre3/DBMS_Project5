@@ -1,24 +1,31 @@
 package dbms.model;
 
-public class Product {
+import java.sql.Date;
+
+public class UserOrder {
 
 	private int productID;
 	private String productName;
 	private String productDescription;
 	private String productImage;
-	private int productPrice;
+	private double productPrice;
+	private double discountedPrice;
 	private int productPoints;
-	private int productCategoryID;
+	private int productCategory;
+	private String productCategoryName;
+	private Date orderedOn;
 	
-	public Product(int productID,String productName, String productDescription, String productImage, int productPrice, int productPoints, int productCategoryID){
+	public UserOrder(int productID,String productName, String productDescription, String productImage, double productPrice, int productPoints, int productCatID, String productCategoryName,Date orderedOn,double discountedPrice){
 		this.productID = productID;
 		this.productName=productName;
 		this.productDescription = productDescription;
 		this.productImage=productImage;
 		this.productPrice=productPrice;
 		this.productPoints=productPoints;
-		this.productCategoryID=productCategoryID;
-		
+		this.productCategory=productCatID;
+		this.productCategoryName=productCategoryName;
+		this.orderedOn=orderedOn;
+		this.discountedPrice=discountedPrice;
 	}
  
 	public int getProductID() {
@@ -49,16 +56,24 @@ public class Product {
 		return productImage;
 	}
 	
-	public void setProductImg(String productImage){
+	public void setProductImage(String productImage){
 		this.productImage=productImage;
 	}
 	
-	public int getProductPrice() {
+	public double getProductPrice() {
 		return productPrice;
 	}
  
 	public void setProductPrice(int productPrice) {
 		this.productPrice = productPrice;
+	}
+
+	public double getDiscountedPrice() {
+		return discountedPrice;
+	}
+ 
+	public void setDiscountedPrice(int discountedPrice) {
+		this.discountedPrice = discountedPrice;
 	}
 
 	public int getProductPoints() {
@@ -70,11 +85,26 @@ public class Product {
 	}
 
 	public int getProductCatID() {
-		return productCategoryID;
+		return productCategory;
 	}
  
 	public void setProductCatID(int productCatID) {
-		this.productCategoryID = productCatID;
+		this.productCategory = productCatID;
+	}
+	
+	public String getProductCategoryName() {
+		return productCategoryName;
+	}
+ 
+	public void setProductCategoryName(String productCategoryName) {
+		this.productCategoryName = productCategoryName;
+	}
+	public Date getOrderedOn() {
+		return orderedOn;
+	}
+ 
+	public void setOrderedOn(Date orderedOn) {
+		this.orderedOn = orderedOn;
 	}
 
 

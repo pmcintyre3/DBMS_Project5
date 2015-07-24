@@ -12,7 +12,7 @@ import dbms.model.Product;
 
 public class ProductDao {
 	static String url = "jdbc:mysql://localhost:3306/";
-	static String dbName = "test";
+	static String dbName = "dbmsProject5";
 	static String driver = "com.mysql.jdbc.Driver";
 	static String userName = "root";
 	static String password = "root";
@@ -29,13 +29,17 @@ public class ProductDao {
 				Class.forName(driver).newInstance();
 				conn = DriverManager
 						.getConnection(url + dbName, userName, password);
-				pst = conn.prepareStatement("select id,productName, productDescription,productImg from product;");
+				pst = conn.prepareStatement("select productID,productName, productDescription,productImage,productPrice,productPoints,productCategoryID from products");
 				rs = pst.executeQuery();
 				while(rs.next()){
-					productList.add(new Product(rs.getInt("id"),
+					productList.add(new Product(rs.getInt("productID"),
                             					rs.getString("productName"),
                             					rs.getString("productDescription"),
-                            					rs.getString("productImg")
+                            					rs.getString("productImage"),
+                            					rs.getInt("productPrice"),
+                            					rs.getInt("productPoints"),
+                            					rs.getInt("productCategoryID")
+                            					
                             		));
 				}
 			} catch (Exception e) {
@@ -81,14 +85,18 @@ public class ProductDao {
 				Class.forName(driver).newInstance();
 				conn = DriverManager
 						.getConnection(url + dbName, userName, password);
-				pst = conn.prepareStatement("select id,productName, productDescription,productImg from product where id=?");
+				pst = conn.prepareStatement("select productID,productName, productDescription,productImage,productPrice,productPoints,productCategoryID from products where productID=?");
 				pst.setInt(1, productID);
 				rs = pst.executeQuery();
 				while(rs.next()){
-					product =new Product(rs.getInt("id"),
+					product =new Product(rs.getInt("productID"),
                             					rs.getString("productName"),
                             					rs.getString("productDescription"),
-                            					rs.getString("productImg")
+                            					rs.getString("productImage"),
+                            					rs.getInt("productPrice"),
+                            					rs.getInt("productPoints"),
+                            					rs.getInt("productCategoryID")
+                            					
                             			);
 				}
 			} catch (Exception e) {

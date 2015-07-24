@@ -14,7 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import dbms.dao.LoginDao;
 import dbms.dao.ProductDao;
-import dbms.model.Product;
+import dbms.dao.UserDAO;
+import dbms.model.User;
+
 
 /**
  * Servlet implementation class LoginServlet
@@ -58,8 +60,9 @@ public class LoginServlet extends HttpServlet {
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("password");
 
-			if ((result = LoginDao.validate(userName, password)) > 0) {
+			if ((result=LoginDao.validate(userName, password))!=-1) {
 
+				
 				// Set session parameters
 				session = request.getSession(true);
 				session.setAttribute("user", userName);

@@ -49,31 +49,37 @@
 	$(document).ready(function() {
 
 		$('#orderSuccess').hide();
-		$('a.buyProduct').show();
-		$('.buyProduct').show();
+		$('a.buyNow').show();
+		$('.buyNow').show();
 		$(function() {
 			$('[data-toggle="tooltip"]').tooltip()
 		});
-		
-		$("#productDetails").on('click', 'a.buyProduct', function() {
-		   
-		//$('.buyProduct').click(function(){
-			
-			var elementID=this.id; 
-			var productID=elementID.split('_')[1];
+
+		$("#buyProductModal").on('click', 'button.buyProduct', function() {
+
+			var elementID = this.id;
+			var productID = elementID.split('_')[1];
+			var dataToSend=new Object();
+			dataToSend.productID=productID;
 			$.ajax({
-                type: "post",
-                url: "http://localhost:8080/DBMS_Project5/ProductServlet", //this is my servlet
-                data: { productID : JSON.stringify(productID) },
-                success: function(result){   
-                		$('#successText').text(result);
-                		$('#orderSuccess').slideDown();
-                		$('#'+elementID).hide();
-                        
-                }
-            });
+				type : "post",
+				url : "http://localhost:8080/DBMS_Project5/ProductServlet", //this is my servlet
+				data : {
+						product: JSON.stringify(dataToSend)
+				},
+				success : function(result) {
+					$('#buyProductModal').modal('hide');
+					result+= " Click <a href='http://localhost:8080/DBMS_Project5/OrderServlet' style='color:#0000EE;'>here</a> to view its details";
+					$('#successText').html(result);
+					$('#orderSuccess').slideDown();
+					$('#' + elementID).hide();
+
+				}
+			});
 		});
+			
 		
+
 	});
 </script>
 
@@ -113,10 +119,10 @@
 							}
 						}
 					%>
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"
-						role="button" aria-expanded="false"
+					<a href="#" role="button" aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown"
 						style="text-transform: capitalize;"><b><%=userName%></b>
 						&nbsp; <span class="caret"></span></a>
+					
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="#">My Orders</a></li>
 						<li class="divider"></li>
@@ -157,7 +163,7 @@
 				<br>
 
 				<div class="thumbnail" style="">
-					<img class='img-responsive' src='${productDetails.productImg}'
+					<img class='img-responsive' src='${productDetails.productImage}'
 						alt=''>
 				</div>
 			</div>
@@ -169,29 +175,60 @@
 					</h3>
 					<p>${productDetails.productDescription}</p>
 
+					<p class="productPrice" id="productPrice_${productDetails.productPrice}">
+						<h3>Price: $${productDetails.productPrice}.00</h3>
+					</p>
+					
 					<p>
-						<button type="button" class="btn btn-default"
-							data-toggle="tooltip" data-placement="top" title=""
-							data-original-title="Size #6">6</button>
-
-						<button type="button" class="btn btn-default"
-							data-toggle="tooltip" data-placement="top" title=""
-							data-original-title="Size #7">7</button>
-
-						<button type="button" class="btn btn-default"
-							data-toggle="tooltip" data-placement="top" title=""
-							data-original-title="Size #8">8</button>
-
-						<button type="button" class="btn btn-default"
-							data-toggle="tooltip" data-placement="top" title=""
-							data-original-title="Size #9">9</button>
-
+						<span class="label label-info">Select Size:</span><br />
+						<p>
+							<button type="button" class="btn btn-default"
+								data-toggle="tooltip" data-placement="top" title=""
+								data-original-title="Size #6" id="productSize_6">6</button>
+	
+							<button type="button" class="btn btn-default"
+								data-toggle="tooltip" data-placement="top" title=""
+								data-original-title="Size #7" id="productSize_7">7</button>
+	
+							<button type="button" class="btn btn-default"
+								data-toggle="tooltip" data-placement="top" title=""
+								data-original-title="Size #8" id="productSize_8">8</button>
+	
+							<button type="button" class="btn btn-default"
+								data-toggle="tooltip" data-placement="top" title=""
+								data-original-title="Size #9" id="productSize_9">9</button>
+						</p>
 					</p>
 
+					
 					<p>
-						<a class="btn btn-primary buyProduct" href="#" role="button"
-							id='buyProduct_${productDetails.productID}'>Buy Now</a>
-					</p>
+						<a class="btn btn-primary buyNow"  href="#" role="button"
+							data-toggle="modal"
+							data-target="#buyProductModal">Buy Now</a></p>
+
+						<!-- Modal -->
+					<div class="modal fade" id="buyProductModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">Confirm</h4>
+								</div>
+								<div class="modal-body">Please press OK to buy this product.</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Close</button>
+									<button type="button" class="btn btn-primary buyProduct" id='buyProduct_${productDetails.productID}'>Ok</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+
 				</div>
 			</div>
 
@@ -207,10 +244,6 @@
 
 	</div>
 	<!-- /container -->
-
-
-	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<!--     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
 
 
 </body>

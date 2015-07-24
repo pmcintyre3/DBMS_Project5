@@ -6,32 +6,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import dbms.model.User;
+
 public class LoginDao {
+	private static String url = "jdbc:mysql://localhost:3306/";
+	private static String dbName = "dbmsProject5";
+	private static String driver = "com.mysql.jdbc.Driver";
+	private static String userName = "root";
+	private static String password = "root";
+
+	
 	public static int validate(String name, String pass) {
 		boolean status = false;
-		int id=-1;
+		int userID=-1;
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		
-		String url = "jdbc:mysql://localhost:3306/";
-		String dbName = "test";
-		String driver = "com.mysql.jdbc.Driver";
-		String userName = "root";
-		String password = "root";
-
+		
 		try {
 				Class.forName(driver).newInstance();
 				conn = DriverManager
 						.getConnection(url + dbName, userName, password);
 				pst = conn
-						.prepareStatement("select id from user where userid=? and password=?");
+						.prepareStatement("select userID from users where userName=? and userPassword=?");
 				pst.setString(1, name);
 				pst.setString(2, pass);
 	
 				rs = pst.executeQuery();
 				while(rs.next()){
-					id=rs.getInt(1);
+					userID=rs.getInt("userID");
 				}
 			} catch (Exception e) {
 			System.out.println(e);
@@ -61,6 +65,8 @@ public class LoginDao {
 			}
 		}
 		
-		return id;  
+		return userID;  
 	}
+	
+
 }
