@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+    <c:set var="base" value="${fn:substring(url, 0, fn:length(url) - fn:length(req.requestURI))}${req.contextPath}/" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,117 +66,27 @@
 
 
 		<div class="row">
-			<div class="col-md-4">
-				<br />
-				<div class="thumbnail">
-					<img class="img-responsive" src="bootstrap/images/pic.jpg" alt="">
-					<div class="caption">
-						<h3>
-							Product #1<br>
+        			<c:forEach items="${productList}" var="article">
 
-						</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Iste saepe et quisquam nesciunt maxime.</p>
-						<p>
-							<a class="btn btn-primary" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<br />
-				<div class="thumbnail">
-					<img class="img-responsive" src="bootstrap/images/pic1.jpg" alt="">
-					<div class="caption">
-						<h3>
-							Product #2<br>
+            			<div class='col-md-4'>
+        							<br />
+        							<div class='thumbnail'>
+        								<img class='img-responsive' src='${article.productImage}' } alt=''>
+        								<div class='caption'>
+        									<h3>${article.productName}<br /></h3>
+        								<p>
+        									${article.productDescription} </p>
+        								<p>
+        									<a class="btn btn-primary" href="http://localhost:8080/DBMS_Project5/ProductServlet?productID=${article.productID}" role="button">View
+        									details &raquo;</a>
+        								</p>
+        							</div>
+        						</div>
+        				</div>
 
-						</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Iste saepe et quisquam nesciunt maxime.</p>
-						<p>
-							<a class="btn btn-primary" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<br />
-				<div class="thumbnail">
-					<img class="img-responsive" src="bootstrap/images/pic2.jpg" alt="">
-					<div class="caption">
-						<h3>
-							Product #3<br>
+          			</c:forEach>
 
-						</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Iste saepe et quisquam nesciunt maxime.</p>
-						<p>
-							<a class="btn btn-primary" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<br />
-				<div class="thumbnail">
-					<img class="img-responsive" src="bootstrap/images/pic3.jpg" alt="">
-					<div class="caption">
-						<h3>
-							Product #3<br>
-
-						</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Iste saepe et quisquam nesciunt maxime.</p>
-						<p>
-							<a class="btn btn-primary" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<br />
-				<div class="thumbnail">
-					<img class="img-responsive" src="bootstrap/images/pic4.jpg" alt="">
-					<div class="caption">
-						<h3>
-							Product #4<br>
-
-						</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Iste saepe et quisquam nesciunt maxime.</p>
-						<p>
-							<a class="btn btn-primary" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<br />
-				<div class="thumbnail">
-					<img class="img-responsive" src="bootstrap/images/pic5.jpg" alt="">
-					<div class="caption">
-						<h3>
-							Product #5<br>
-
-						</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Iste saepe et quisquam nesciunt maxime.</p>
-						<p>
-							<a class="btn btn-primary" href="#" role="button">View
-								details &raquo;</a>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
+        		</div>
 
 		<!-- Site footer -->
 		<footer class="footer">
