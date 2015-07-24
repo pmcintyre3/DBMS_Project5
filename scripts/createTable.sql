@@ -61,8 +61,8 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
-  `userId` int NOT NULL,
-  `orderId` int NOT NULL,
+  `userID` int NOT NULL,
+  `orderID` int NOT NULL,
   `totalOrderPrice` double NOT NULL,
   `orderedOn` int NOT NULL,
    PRIMARY KEY (`userId`, `orderId`)
@@ -74,8 +74,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `orderDetails`;
 CREATE TABLE `orderDetails` (
   `orderNumber` int NOT NULL,
-  `prodId` int NOT NULL,
-  'productSoldAt` double NOT NULL,
+  `productID` int NOT NULL,
+  `productSoldAt` double NOT NULL,
    PRIMARY KEY (`orderNumber`,`productSoldAt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
