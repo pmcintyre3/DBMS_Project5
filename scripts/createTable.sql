@@ -12,7 +12,7 @@ CREATE TABLE `users` (
 
 
 -- LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES (1,'admin','password',1,true,'2015-07-22 12:00:00'),(2,'phillip','passmc',2,false,'2015-07-22 12:00:00'),(3,'narita','passpa',3,false,'2015-07-22 12:00:00'),(4,'jey','passjo',1,false,'2015-07-22 12:00:00'),(5,'justin','passtu',2,false,'2015-07-22 12:00:00'),(6,'ryan','passpe',1,false,'2015-07-22 12:00:00');
+INSERT INTO `users` VALUES (1,'admin','password',3,true,'2015-07-22 12:00:00'),(2,'phillip','passmc',2,false,'2015-07-22 12:00:00'),(3,'narita','passpa',1,false,'2015-07-22 12:00:00'),(4,'jey','passjo',3,false,'2015-07-22 12:00:00'),(5,'justin','passtu',2,false,'2015-07-22 12:00:00'),(6,'ryan','passpe',1,false,'2015-07-22 12:00:00');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `points`;
