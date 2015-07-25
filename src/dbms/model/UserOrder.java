@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class UserOrder {
 
+	private int orderID;
 	private int productID;
 	private String productName;
 	private String productDescription;
@@ -15,7 +16,8 @@ public class UserOrder {
 	private String productCategoryName;
 	private Date orderedOn;
 	
-	public UserOrder(int productID,String productName, String productDescription, String productImage, double productPrice, int productPoints, int productCatID, String productCategoryName,Date orderedOn,double discountedPrice){
+	public UserOrder(int orderID,int productID,String productName, String productDescription, String productImage, double productPrice, int productPoints, int productCatID, String productCategoryName,Date orderedOn,double discountedPrice){
+		this.orderID=orderID;
 		this.productID = productID;
 		this.productName=productName;
 		this.productDescription = productDescription;
@@ -28,6 +30,14 @@ public class UserOrder {
 		this.discountedPrice=discountedPrice;
 	}
  
+	public int getOrderID() {
+		return orderID;
+	}
+ 
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
+	}
+
 	public int getProductID() {
 		return productID;
 	}

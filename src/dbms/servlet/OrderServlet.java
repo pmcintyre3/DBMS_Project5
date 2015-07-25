@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -52,8 +54,13 @@ public class OrderServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			//Get the current session's User ID
 			int userID=Integer.parseInt(session.getAttribute("userID").toString());
+			
 			request.setAttribute("userOrderList",OrderDAO.getAllOrdersOfUser(userID));
 			request.setAttribute("totalUserPoints",UserDAO.getUserPoints(userID));
+			
+			
+			Map<String, String> membershipMap =UserDAO.getUserCategory(userID);
+			request.setAttribute("userMembershipString",membershipMap.get("categoryName"));
 			RequestDispatcher rd = request.getRequestDispatcher("orderHistory.jsp");
 			rd.forward(request, response);
 			//Get all the products bought by that User
@@ -71,29 +78,72 @@ public class OrderServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-//		try {
+		try {
 			
 //			boolean result = false;
 //			response.setContentType("text/html");
 //			HttpSession session = request.getSession();
+//			int userID=Integer.parseInt(session.getAttribute("userID").toString());
 //						
 //			// Get request parameters for productID
 //			JSONObject jObj=new JSONObject(request.getParameter("product"));
 //			int productID = jObj.getInt("productID");
+//			boolean redeemPoints=jObj.getBoolean("redeemPoints");
 //			PrintWriter out;
-//			
+//		
 //			//Retrieve that product's details
-//			Product productObject=ProductDao.getProduct(productID, 0);
-//			System.out.println("ProductObj: "+productObject.getProductPoints());
+//			Product productObject = ProductDao.getProduct(productID, 0);
+//			productObject=this.getDiscoutOnProduct(productObject);
+//			int userPoints=UserDAO.getUserPoints(userID);
+//		
 //			
 //			/**
-//			 * Check if the user has an discount on that product.
-//			 * 	-- If yes, apply that amount
-//			 * 	-- If no, keep the original amount
-//			 * - Finally, increase User's points  
+//			 * 1. finalAmountoPay = productPrice;
+//			 * 2. if productPrice>=discountPrice
+//			 * 		finalAmountoPay=discountPrice;
+//			 * 3. if chkbox chked {
+//			 * 			temp=finalAmountoPay;
+//			 * 			if(redeemPoints<=finalAmpuntopay){
+//			 * 				finalAmountoPay -= redeemPoints;
+//			 * 				redeemPoints=0
+//			 * 				
+//			 * 			}
+//			 * 			else{
+//			 * 				finalAmountoPay=0;
+//			 * 				redeemPoints-=temp;
+//			 * 			}
+//			 * 			redeemPoints+=points accodring to the product
+//			 * }
+//			 * 4. Update redeemPoints
+//			 * 
 //			 * 
 //			 */
-//			String userID=(String) session.getAttribute("userID");
+//			
+//			
+//			double productPrice=productObject.getProductPrice();
+//			double productDiscountPrice=productObject.getProductDiscountedPrice();
+//			System.out.println("productDiscountPrice: "+productDiscountPrice);
+//			
+//			double finalAmountToPay=productPrice;
+//			
+//			if(productPrice>productDiscountPrice)
+//				finalAmountToPay=productDiscountPrice;
+//			
+//			System.out.println("Final Amount: "+finalAmountToPay);
+//			if(redeemPoints){
+//				double temp=finalAmountToPay;
+//				if(userPoints<=finalAmountToPay){
+//					finalAmountToPay-=(double)userPoints;
+//					userPoints=0;
+//				}else{
+//					finalAmountToPay=0;
+//					userPoints-=temp;
+//				}
+//				userPoints+=productObject.getProductPoints();
+//				
+//			}
+//					
+//			
 //			Date date = new Date();
 //			java.util.Date utilDate = new java.util.Date();
 //		    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -103,27 +153,48 @@ public class OrderServlet extends HttpServlet {
 //		     * If the order was successfully placed, add points 
 //		     * for the User.
 //		     */
-//		    if(OrderDAO.putOrder(userID, productID, sqlDate)){
-//		    	int currentPoints=UserDAO.getUserPoints(userID);
-//		    	currentPoints+=productObject.getProductPoints();
-//		    	if(UserDAO.setUserPoints(userID, currentPoints)){
+//		    if(OrderDAO.putOrder(userID, productID,finalAmountToPay,sqlDate)){
+//		    	if(UserDAO.setUserPoints(userID, userPoints)){
 //		    		result=true;
 //		    	}
 //		    }
 //			
-//		    if(result){
-//			    out = response.getWriter();  
-//		        out.print(
-//		        			" Order placed! You've successfully bought this item and received "
-//		        			+productObject.getProductPoints()
-//		        			+" points!!"
-//		        			
-//		        		);
-//		    }
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+////		    if(result){
+////			    out = response.getWriter();  
+////		        out.print(
+////		        			" Order placed! You've successfully bought this item and received "
+////		        			+productObject.getProductPoints()
+////		        			+" points!!"
+////		        			
+////		        		);
+////		    }
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Function to get the discounted on the selected product
+	 * 
+	 */
+	public Product getDiscoutOnProduct(Product productObject){
+		try{
+			
+			double productPrice=productObject.getProductPrice();
+			double x=productPrice*((double)(productObject.getProductCategoryDiscount())/100);
+			double y=productPrice-x;
+			productObject.setProductDiscountedPrice(y);
+				
+			
+			
+		}catch(Exception e){
+		
+			e.printStackTrace();
+		}
+		return productObject;
+		
 	}
 
+	
 }

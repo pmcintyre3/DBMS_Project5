@@ -6,11 +6,15 @@ public class Product {
 	private String productName;
 	private String productDescription;
 	private String productImage;
-	private int productPrice;
+	private double productPrice;
 	private int productPoints;
 	private int productCategoryID;
+	private String productCategoryName;
+	private double productDiscountedPrice;
+	private int productCategoryDiscount;
 	
-	public Product(int productID,String productName, String productDescription, String productImage, int productPrice, int productPoints, int productCategoryID){
+	
+	public Product(int productID,String productName, String productDescription, String productImage, double productPrice, int productPoints, int productCategoryID){
 		this.productID = productID;
 		this.productName=productName;
 		this.productDescription = productDescription;
@@ -20,7 +24,57 @@ public class Product {
 		this.productCategoryID=productCategoryID;
 		
 	}
+	
+	public Product(int productID,String productName, String productDescription, String productImage, double productPrice, int productPoints, int productCategoryID, String productCategoryName){
+		this.productID = productID;
+		this.productName=productName;
+		this.productDescription = productDescription;
+		this.productImage=productImage;
+		this.productPrice=productPrice;
+		this.productPoints=productPoints;
+		this.productCategoryID=productCategoryID;
+		this.productCategoryName=productCategoryName;
+		
+	}
+
+	
+	public Product(int productID,String productName, String productDescription, String productImage, double productPrice, int productPoints, int productCategoryID, String productCategoryName,int productCategoryDiscount){
+		this.productID = productID;
+		this.productName=productName;
+		this.productDescription = productDescription;
+		this.productImage=productImage;
+		this.productPrice=productPrice;
+		this.productPoints=productPoints;
+		this.productCategoryID=productCategoryID;
+		this.productCategoryName=productCategoryName;
+		this.productCategoryDiscount=productCategoryDiscount;
+		
+		
+	}
+
+	public Product(int productID,String productName, String productDescription, String productImage, double productPrice, int productPoints, int productCategoryID, String productCategoryName,double productDiscountedPrice,int productCategoryDiscount){
+		this.productID = productID;
+		this.productName=productName;
+		this.productDescription = productDescription;
+		this.productImage=productImage;
+		this.productPrice=productPrice;
+		this.productPoints=productPoints;
+		this.productCategoryID=productCategoryID;
+		this.productCategoryName=productCategoryName;
+		this.productDiscountedPrice=productDiscountedPrice;
+		this.productCategoryDiscount=productCategoryDiscount;
+		
+	}
+
+	public int getProductCategoryDiscount(){
+		return productCategoryDiscount;
+	}
  
+	public void setProductCategoryDiscount(int productCategoryDiscount) {
+		this.productCategoryDiscount = productCategoryDiscount;
+	}
+
+	
 	public int getProductID() {
 		return productID;
 	}
@@ -49,15 +103,15 @@ public class Product {
 		return productImage;
 	}
 	
-	public void setProductImg(String productImage){
+	public void setProductImage(String productImage){
 		this.productImage=productImage;
 	}
 	
-	public int getProductPrice() {
+	public double getProductPrice() {
 		return productPrice;
 	}
  
-	public void setProductPrice(int productPrice) {
+	public void setProductPrice(double productPrice) {
 		this.productPrice = productPrice;
 	}
 
@@ -69,13 +123,30 @@ public class Product {
 		this.productPoints = productPoints;
 	}
 
-	public int getProductCatID() {
+	public int getProductCategoryID() {
 		return productCategoryID;
 	}
  
-	public void setProductCatID(int productCatID) {
+	public void setProductCategoryID(int productCatID) {
 		this.productCategoryID = productCatID;
 	}
+	public String getProductCategoryName() {
+		return productCategoryName;
+	}
+ 
+	public void setProductCategoryName(String productCategoryName) {
+		this.productCategoryName = productCategoryName;
+	}
+	
+	public double getProductDiscountedPrice() {
+		return productDiscountedPrice;
+	}
+ 
+	public void setProductDiscountedPrice(double productDiscountedPrice) {
+		this.productDiscountedPrice = productDiscountedPrice;
+	}
+
+
 
 
 }

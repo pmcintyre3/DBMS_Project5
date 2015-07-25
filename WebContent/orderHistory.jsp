@@ -81,12 +81,18 @@
 						style="text-transform: capitalize;"><b><%=user%></b> &nbsp; <span
 						class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">My Orders</a></li>
+						<li><a
+							href="http://localhost:8080/DBMS_Project5/OrderServlet"><span
+								class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>&nbsp;&nbsp;My
+								Orders</a></li>
 						<li class="divider"></li>
 						<li>
 							<form action="LogoutServlet" method="post">
 								<a id="logoutFormLink" href="#" value="Logout"
-									onclick="$(this).closest('form').submit();">&nbsp; Logout </a>
+									onclick="$(this).closest('form').submit();"
+									style="text-decoration: none;"><span
+									class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;
+									Logout </a>
 							</form>
 
 						</li>
@@ -105,46 +111,104 @@
 			</nav>
 
 		</div>
+
 		<div class="row">
 			<br />
-			<div class="col-md-10">
-				<h4>Total Points:${totalUserPoints}</h4>
+			<div class="col-md-3" style="border-right: 1px solid #ecf0f1;">
+				<table class="table">
+					<tbody>
+						<tr>
+							<td style="padding: 0px;"><h3>
+									<small class="text-success">Membership Status:</small>
+									${userMembershipString}
+								</h3></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-3" style="border-right: 1px solid #ecf0f1;">
+				<table class="table">
+					<tbody>
+						<tr>
+							<td style="padding: 0px;"><h3>
+									<small class="text-success">Points Balance:</small>
+									${totalUserPoints}
+								</h3></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row">
-			<c:forEach items="${userOrderList}" var="product">
+			<br />
+			<div class="col-md-12">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Product Name</th>
+							<th>Original Price</th>
+							<th>Bought At</th>
+							<th>Points Received</th>
+							<th>Ordered On</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${userOrderList}" var="product">
+							<tr>
+								<th scope="row">1</th>
+								<td><a data-toggle="modal" data-target="#myModal_${product.productID}">${product.productName}</a>
+									<div class="modal fade" id="myModal_${product.productID}" tabindex="-1"
+										role="dialog" aria-labelledby="myModalLabel">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+													<h4 class="modal-title" id="myModalLabel">Product
+														Details</h4>
+												</div>
+												<div class="modal-body">
+													<div class="thumbnail">
+														<img class="img-responsive" src='${product.productImage}'
+															alt="">
+														<div class="caption">
+															<h3>${product.productName}<br>
+															</h3>
+															<p>${product.productDescription}</p>
 
-				<div class='col-md-6'>
-					<br />
-					<div class='thumbnail'>
-						<img class='img-responsive' src='${product.productImage}' } alt=''>
-						<div class='caption'>
-							<div class="row">
-								<div class="col-md-12">
-									<h3>${product.productName}<br />
-									</h3>
-									<p>${product.productDescription}</p>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<h5>Original Price: $${product.productPrice}.00</h5>
-									<h5>Ordered On: ${product.orderedOn}</h5>
-								</div>
-								<div class="col-md-6">
-									<h5>Discounted Price: $${product.discountedPrice}.00</h5>
-									<h5>Points : ${product.productPoints}</h5>
-								</div>
-							</div>
+														</div>
+													</div>
 
-						</div>
-					</div>
-				</div>
-
-			</c:forEach>
-
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default"
+														data-dismiss="modal">Close</button>
+												</div>
+											</div>
+										</div>
+									</div></td>
+								<td><c:choose>
+										<c:when
+											test="${product.discountedPrice < product.productPrice}">
+											<span style="text-decoration: line-through;">$${product.productPrice}</span>
+										</c:when>
+										<c:otherwise>
+											<span>$${product.productPrice}</span>
+										</c:otherwise>
+									</c:choose></td>
+								<td>$${product.discountedPrice}</td>
+								<td>${product.productPoints}</td>
+								<td>${product.orderedOn}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 		</div>
-
+	
 		<!-- Site footer -->
 		<footer class="footer">
 			<p>&copy; Company 2015</p>

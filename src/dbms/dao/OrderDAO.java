@@ -33,7 +33,7 @@ public class OrderDAO {
 			Class.forName(driver).newInstance();
 			conn = DriverManager.getConnection(url + dbName, userName, password);
 			
-			String selectTableSQL = "select products.productID as productID, products.productName as productName, products.productDescription as productDescription, "
+			String selectTableSQL = "select orders.orderID,products.productID as productID, products.productName as productName, products.productDescription as productDescription, "
 									+"products.productImage as productImage,products.productPrice as productPrice,products.productCategoryID as productCategoryID, products.productPoints as productPoints, "
 									+"categories.categoryName as categoryName,orders.orderedOn as orderedOn, orderDetails.productSoldAt as discountedPrice " 
 									+"from users, products,orders,orderDetails,categories where " 
@@ -46,7 +46,8 @@ public class OrderDAO {
 			rs = pst.executeQuery();
 			while(rs.next()){
 				userOrderList.add(new UserOrder(
-						//int productID,String productName, String productDescription, String productImage, int productPrice, int productPoints, int productCatID, String productCategoryName,Date orderedOn			
+						//int productID,String productName, String productDescription, String productImage, int productPrice, int productPoints, int productCatID, String productCategoryName,Date orderedOn
+									rs.getInt("orderID"),
                         			rs.getInt("productID"),
                         			rs.getString("productName"),
                         			rs.getString("productDescription"),
@@ -71,7 +72,7 @@ public class OrderDAO {
 	}
 
 	
-	public static boolean putOrder(int productID,int userID,double totalOrderPrice,Date orderedOn){
+	public static boolean putOrder(int userID,int productID,double totalOrderPrice,Date orderedOn){
 		boolean result=false;
 		Connection conn = null;
 		PreparedStatement pst = null;

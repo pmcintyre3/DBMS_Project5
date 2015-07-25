@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 24, 2015 at 05:26 AM
+-- Generation Time: Jul 22, 2015 at 08:01 AM
 -- Server version: 5.6.25
 -- PHP Version: 5.5.20
 
@@ -29,18 +29,19 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `categories` (
   `categoryID` int(11) NOT NULL,
   `categoryName` varchar(255) NOT NULL,
-  `categoryDiscount` int(11) NOT NULL
+  `categoryDiscount` int(11) NOT NULL,
+  `minPointsRequired` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`categoryID`, `categoryName`, `categoryDiscount`) VALUES
-(0, 'New Member', 10),
-(1, 'Bronze', 15),
-(2, 'Silver', 20),
-(3, 'Gold', 25);
+INSERT INTO `categories` (`categoryID`, `categoryName`, `categoryDiscount`, `minPointsRequired`) VALUES
+(0, 'New Member', 10, 0),
+(1, 'Bronze', 15, 20),
+(2, 'Silver', 20, 50),
+(3, 'Gold', 25, 70);
 
 -- --------------------------------------------------------
 
@@ -60,9 +61,7 @@ CREATE TABLE IF NOT EXISTS `orderDetails` (
 --
 
 INSERT INTO `orderDetails` (`orderNumber`, `productID`, `productSoldAt`, `createdOn`) VALUES
-(1, 1, 70, '2015-07-24 00:00:00'),
-(2, 1, 70, '2015-07-24 00:00:00'),
-(3, 5, 70, '2015-07-24 00:00:00');
+(1, 3, 70, '2015-07-22 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -82,9 +81,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
 --
 
 INSERT INTO `orders` (`userID`, `orderID`, `totalOrderPrice`, `orderedOn`) VALUES
-(3, 1, 70, '2015-07-24 00:00:00'),
-(3, 2, 70, '2015-07-24 00:00:00'),
-(3, 3, 70, '2015-07-24 00:00:00');
+(4, 1, 70, '2015-07-22 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -94,20 +91,21 @@ INSERT INTO `orders` (`userID`, `orderID`, `totalOrderPrice`, `orderedOn`) VALUE
 
 CREATE TABLE IF NOT EXISTS `points` (
   `userID` int(11) NOT NULL,
-  `points` int(11) NOT NULL
+  `points` int(11) NOT NULL,
+  `pointsRenewalDate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `points`
 --
 
-INSERT INTO `points` (`userID`, `points`) VALUES
-(1, 100),
-(2, 90),
-(3, 110),
-(4, 70),
-(5, 60),
-(6, 50);
+INSERT INTO `points` (`userID`, `points`, `pointsRenewalDate`) VALUES
+(1, 0, '2015-07-22 12:00:00'),
+(2, 100, '2015-07-28 00:00:00'),
+(3, 55, '2015-07-28 00:00:00'),
+(4, 60, '2015-07-22 12:00:00'),
+(5, 0, '2015-07-22 12:00:00'),
+(6, 0, '2015-07-22 12:00:00');
 
 -- --------------------------------------------------------
 
@@ -131,11 +129,11 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`productID`, `productPrice`, `productImage`, `productName`, `productDescription`, `productPoints`, `productCategoryID`) VALUES
 (1, 70, 'bootstrap/images/pic.jpg', 'Nike', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 10, 1),
-(2, 70, 'bootstrap/images/pic1.jpg', 'Adidas', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 10, 2),
-(3, 70, 'bootstrap/images/pic2.jpg', 'New balance', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 10, 3),
+(2, 70, 'bootstrap/images/pic1.jpg', 'Adidas', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 30, 2),
+(3, 70, 'bootstrap/images/pic2.jpg', 'New balance', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 60, 3),
 (4, 70, 'bootstrap/images/pic3.jpg', 'Puma', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 10, 1),
-(5, 70, 'bootstrap/images/pic4.jpg', 'Asics', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 10, 2),
-(6, 70, 'bootstrap/images/pic5.jpg', 'Fila', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 10, 3);
+(5, 70, 'bootstrap/images/pic4.jpg', 'Asics', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 30, 2),
+(6, 70, 'bootstrap/images/pic5.jpg', 'Fila', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 60, 3);
 
 -- --------------------------------------------------------
 
@@ -144,26 +142,25 @@ INSERT INTO `products` (`productID`, `productPrice`, `productImage`, `productNam
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `userID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
   `userName` varchar(255) NOT NULL,
   `userPassword` varchar(255) NOT NULL,
   `userCategoryID` int(11) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL,
-  `createdOn` datetime NOT NULL,
-  PRIMARY KEY(`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `createdOn` datetime NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userName`, `userPassword`, `userCategoryID`, `isAdmin`, `createdOn`) VALUES
-('admin', 'password', 1, 1, '2015-07-22 12:00:00'),
-('phillip', 'passmc', 2, 0, '2015-07-22 12:00:00'),
-('narita', 'passpa', 3, 0, '2015-07-22 12:00:00'),
-('jey', 'passjo', 1, 0, '2015-07-22 12:00:00'),
-('justin', 'passtu', 2, 0, '2015-07-22 12:00:00'),
-('ryan', 'passpe', 1, 0, '2015-07-22 12:00:00');
+INSERT INTO `users` (`userID`, `userName`, `userPassword`, `userCategoryID`, `isAdmin`, `createdOn`) VALUES
+(1, 'admin', 'password', 0, 1, '2015-07-22 12:00:00'),
+(2, 'phillip', 'passmc', 3, 0, '2015-07-22 12:00:00'),
+(3, 'narita', 'passpa', 2, 0, '2015-07-22 12:00:00'),
+(4, 'jey', 'passjo', 0, 0, '2015-07-22 12:00:00'),
+(5, 'justin', 'passtu', 0, 0, '2015-07-22 12:00:00'),
+(6, 'ryan', 'passpe', 0, 0, '2015-07-22 12:00:00');
 
 --
 -- Indexes for dumped tables
@@ -199,10 +196,20 @@ ALTER TABLE `products`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`userID`),
   ADD UNIQUE KEY `userName` (`userName`),
   ADD UNIQUE KEY `userName_2` (`userName`),
   ADD KEY `userCategoryID` (`userCategoryID`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- Constraints for dumped tables
 --
@@ -211,13 +218,13 @@ ALTER TABLE `users`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
 -- Constraints for table `points`
 --
 ALTER TABLE `points`
-  ADD CONSTRAINT `points_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `points_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
 -- Constraints for table `products`

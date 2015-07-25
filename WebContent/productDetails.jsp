@@ -48,39 +48,39 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		$('#orderSuccess').hide();
-		$('a.buyNow').show();
-		$('.buyNow').show();
-		$(function() {
-			$('[data-toggle="tooltip"]').tooltip()
-		});
+				$('#orderSuccess').hide();
+				$('a.buyNow').show();
+				$('.buyNow').show();
+				$(function() {
+					$('[data-toggle="tooltip"]').tooltip()
+				});
 
-		$("#buyProductModal").on('click', 'button.buyProduct', function() {
+				$("#buyProductModal").on('click','button.buyProduct',function() {
 
-			var elementID = this.id;
-			var productID = elementID.split('_')[1];
-			var dataToSend=new Object();
-			dataToSend.productID=productID;
-			$.ajax({
-				type : "post",
-				url : "http://localhost:8080/DBMS_Project5/ProductServlet", //this is my servlet
-				data : {
-						product: JSON.stringify(dataToSend)
-				},
-				success : function(result) {
-					$('#buyProductModal').modal('hide');
-					result+= " Click <a href='http://localhost:8080/DBMS_Project5/OrderServlet' style='color:#0000EE;'>here</a> to view its details";
-					$('#successText').html(result);
-					$('#orderSuccess').slideDown();
-					$('#' + elementID).hide();
+					var elementID = this.id;
+					var productID = elementID.split('_')[1];
+					var dataToSend = new Object();
+					var redeemPoints=($('.redeemPointsChkBox').is(':checked'))?true:false;
+					dataToSend.productID = productID;
+					dataToSend.redeemPoints=redeemPoints;
+					$.ajax({
+						type : "post",
+						url : "http://localhost:8080/DBMS_Project5/ProductServlet", //this is my servlet
+						data : {
+							product : JSON.stringify(dataToSend)
+						},
+						success : function(result) {
+									$('#buyProductModal').modal('hide');
+									result += " Click <a href='http://localhost:8080/DBMS_Project5/OrderServlet' style='color:#0000EE;'>here</a> to view its details";
+									$('#successText').html(result);
+									$('#orderSuccess').slideDown();
+									$('#' + elementID).hide();
 
-				}
-			});
-		});
-			
-		
+									}
+									});
+						});
 
-	});
+});
 </script>
 
 
@@ -119,17 +119,24 @@
 							}
 						}
 					%>
-					<a href="#" role="button" aria-expanded="false" class="dropdown-toggle" data-toggle="dropdown"
+					<a href="#" role="button" aria-expanded="false"
+						class="dropdown-toggle" data-toggle="dropdown"
 						style="text-transform: capitalize;"><b><%=userName%></b>
 						&nbsp; <span class="caret"></span></a>
-					
+
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#">My Orders</a></li>
+						<li><a
+							href="http://localhost:8080/DBMS_Project5/OrderServlet"><span
+								class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>&nbsp;&nbsp;My
+								Orders</a></li>
 						<li class="divider"></li>
 						<li>
 							<form action="LogoutServlet" method="post">
 								<a id="logoutFormLink" href="#" value="Logout"
-									onclick="$(this).closest('form').submit();">&nbsp; Logout </a>
+									onclick="$(this).closest('form').submit();"
+									style="text-decoration: none;"><span
+									class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;&nbsp;
+									Logout </a>
 							</form>
 
 						</li>
@@ -170,45 +177,76 @@
 
 			<div class="col-md-7">
 				<div class='caption'>
+				<c:choose>
+					<c:when test="${productDiscountFlag==true}">
+					
+<%-- 					<c:choose> --%>
+<%-- 						<c:when test="${productDetails.productCategoryID==1}"> --%>
+<%-- 							<span class="label label-danger">${productDetails.productCategoryName}</span> --%>
+<%-- 						</c:when> --%>
+<%-- 						<c:when test="${productDetails.productCategoryID==2}"> --%>
+<%-- 							<span class="label label-info">${productDetails.productCategoryName}</span> --%>
+<%-- 						</c:when> --%>
+<%-- 						<c:when test="${productDetails.productCategoryID==3}"> --%>
+<%-- 							<span class="label label-warning">${productDetails.productCategoryName}</span> --%>
+<%-- 						</c:when> --%>
+<%-- 						<c:otherwise> --%>
+<%-- 							<span class="label label-default">${productDetails.productCategoryName}</span> --%>
+<%-- 						</c:otherwise> --%>
+<%-- 					</c:choose> --%>
+					
+					<div class="co-md-6">
+						<p>Discounted Price: $${productDetails.productDiscountedPrice}</p>
+					</div>
+					</c:when>
+					</c:choose>
 
 					<h3>${productDetails.productName}<br />
 					</h3>
 					<p>${productDetails.productDescription}</p>
 
 					<p class="productPrice" id="productPrice_${productDetails.productPrice}">
-						<h3>Price: $${productDetails.productPrice}.00</h3>
+						Product Price:
+						<c:choose>
+							<c:when test="${productDiscountFlag==true && productDetails.productDiscountedPrice < productDetails.productPrice}">
+								<span style="text-decoration: line-through;">$${productDetails.productPrice}</span>
+							</c:when>
+							<c:otherwise>
+								<span>$${productDetails.productPrice}</span>
+							</c:otherwise>
+						</c:choose>
 					</p>
-					
+
 					<p>
 						<span class="label label-info">Select Size:</span><br />
-						<p>
-							<button type="button" class="btn btn-default"
-								data-toggle="tooltip" data-placement="top" title=""
-								data-original-title="Size #6" id="productSize_6">6</button>
-	
-							<button type="button" class="btn btn-default"
-								data-toggle="tooltip" data-placement="top" title=""
-								data-original-title="Size #7" id="productSize_7">7</button>
-	
-							<button type="button" class="btn btn-default"
-								data-toggle="tooltip" data-placement="top" title=""
-								data-original-title="Size #8" id="productSize_8">8</button>
-	
-							<button type="button" class="btn btn-default"
-								data-toggle="tooltip" data-placement="top" title=""
-								data-original-title="Size #9" id="productSize_9">9</button>
-						</p>
+					</p>
+					<p>
+						<button type="button" class="btn btn-default"
+							data-toggle="tooltip" data-placement="top" title=""
+							data-original-title="Size #6" id="productSize_6">6</button>
+
+						<button type="button" class="btn btn-default"
+							data-toggle="tooltip" data-placement="top" title=""
+							data-original-title="Size #7" id="productSize_7">7</button>
+
+						<button type="button" class="btn btn-default"
+							data-toggle="tooltip" data-placement="top" title=""
+							data-original-title="Size #8" id="productSize_8">8</button>
+
+						<button type="button" class="btn btn-default"
+							data-toggle="tooltip" data-placement="top" title=""
+							data-original-title="Size #9" id="productSize_9">9</button>
 					</p>
 
-					
-					<p>
-						<a class="btn btn-primary buyNow"  href="#" role="button"
-							data-toggle="modal"
-							data-target="#buyProductModal">Buy Now</a></p>
 
-						<!-- Modal -->
-					<div class="modal fade" id="buyProductModal" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel">
+					<p>
+						<a class="btn btn-primary buyNow" href="#" role="button"
+							data-toggle="modal" data-target="#buyProductModal">Buy Now</a>
+					</p>
+
+					<!-- Modal -->
+					<div class="modal fade" id="buyProductModal" tabindex="-1"
+						role="dialog" aria-labelledby="myModalLabel">
 						<div class="modal-dialog" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -218,16 +256,32 @@
 									</button>
 									<h4 class="modal-title" id="myModalLabel">Confirm</h4>
 								</div>
-								<div class="modal-body">Please press OK to buy this product.</div>
+								<div class="modal-body">
+									Please press OK to buy this product.
+									<p> 
+<%-- 										<c:choose> --%>
+<%-- 											<c:when test="${userPoints>0}"> --%>
+<%-- 												<label> <input class="redeemPointsChkBox" type="checkbox" id="${productDetails.productID}_${userPoints}"> You have ${userPoints} points. Check to redeem. --%>
+<!-- 												</label> -->
+<%-- 											</c:when> --%>
+<%-- 											<c:otherwise> --%>
+<%-- 												<label style="display:none;"> <input class="redeemPointsChkBox" type="checkbox" id="${productDetails.productID}_${userPoints}"> Redeem ${userPoints} points --%>
+<!-- 												</label> -->
+<%-- 											</c:otherwise> --%>
+<%-- 										</c:choose> --%>
+										
+									</p>
+								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">Close</button>
-									<button type="button" class="btn btn-primary buyProduct" id='buyProduct_${productDetails.productID}'>Ok</button>
+									<button type="button" class="btn btn-primary buyProduct"
+										id='buyProduct_${productDetails.productID}'>Ok</button>
 								</div>
 							</div>
 						</div>
 					</div>
-					
+
 
 				</div>
 			</div>
