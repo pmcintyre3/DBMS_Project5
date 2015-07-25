@@ -241,3 +241,10 @@ ALTER TABLE `users`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 1; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 2; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 3; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 4; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 5; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 6; 
+
+
+UPDATE `dbmsProject5`.`users` SET `userName` = 'admin@uga.edu' WHERE `users`.`userID` = 1; UPDATE `dbmsProject5`.`users` SET `userName` = 'phillip@uga.edu' WHERE `users`.`userID` = 2; UPDATE `dbmsProject5`.`users` SET `userName` = 'narita@uga.edu' WHERE `users`.`userID` = 3; UPDATE `dbmsProject5`.`users` SET `userName` = 'jey@uga.edu' WHERE `users`.`userID` = 4; UPDATE `dbmsProject5`.`users` SET `userName` = 'justin@uga.edu' WHERE `users`.`userID` = 5; UPDATE `dbmsProject5`.`users` SET `userName` = 'ryan@uga.edu' WHERE `users`.`userID` = 6;
+
