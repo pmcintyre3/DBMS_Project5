@@ -12,7 +12,7 @@ CREATE TABLE `users` (
 
 
 -- LOCK TABLES `users` WRITE;
-INSERT INTO `users` VALUES (1,'admin','password',1,true,'2015-07-22 12:00:00'),(2,'phillip','passmc',2,false,'2015-07-22 12:00:00'),(3,'narita','passpa',3,false,'2015-07-22 12:00:00'),(4,'jey','passjo',1,false,'2015-07-22 12:00:00'),(5,'justin','passtu',2,false,'2015-07-22 12:00:00'),(6,'ryan','passpe',1,false,'2015-07-22 12:00:00');
+INSERT INTO `users` VALUES (1,'admin','password',3,true,'2015-07-22 12:00:00'),(2,'phillip','passmc',2,false,'2015-07-22 12:00:00'),(3,'narita','passpa',1,false,'2015-07-22 12:00:00'),(4,'jey','passjo',3,false,'2015-07-22 12:00:00'),(5,'justin','passtu',2,false,'2015-07-22 12:00:00'),(6,'ryan','passpe',1,false,'2015-07-22 12:00:00');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `points`;
@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `products`;
 
 CREATE TABLE `products` (
   `productID` int NOT NULL,
-  `productPrice` double NOT NULL,
+  `productPrice` int NOT NULL,
   `productImage` varchar(255) NOT NULL,
   `productName` varchar(255) NOT NULL,
   `productDescription` varchar(1000) NOT NULL,
@@ -50,20 +50,20 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `categoryID` int NOT NULL,
   `categoryName` varchar(255) NOT NULL,
-  `categoryDiscount` int NOT NULL,
+  `categoryMinPoints` int NOT NULL,
+  `categoryDiscount` double NOT NULL,
   PRIMARY KEY (`categoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
  
 
 -- LOCK TABLES `categories` WRITE;
-INSERT INTO `categories` VALUES (0,'new member',10),(1,'bronze',15),(2,'silver',20),(3,'gold',25);
+INSERT INTO `categories` VALUES (0,'no discount',0,1),(1,'bronze',50,0.85),(2,'silver',100,0.8),(3,'gold',200,0.75);
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
-  `userID` int NOT NULL,
-  `orderID` int NOT NULL,
-  `totalOrderPrice` double NOT NULL,
+  `userId` int NOT NULL,
+  `orderId` int NOT NULL,
   `orderedOn` int NOT NULL,
    PRIMARY KEY (`userId`, `orderId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -74,9 +74,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `orderDetails`;
 CREATE TABLE `orderDetails` (
   `orderNumber` int NOT NULL,
-  `productID` int NOT NULL,
-  `productSoldAt` double NOT NULL,
-   PRIMARY KEY (`orderNumber`,`productSoldAt`)
+  `prodId` int NOT NULL,
+   PRIMARY KEY (`orderNumber,prodId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- LOCK TABLES `orderDetails` WRITE;

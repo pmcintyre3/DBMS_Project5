@@ -32,6 +32,12 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+	});
+</script>
+	
 </head>
 
 <body>
@@ -75,11 +81,24 @@
         								<div class='caption'>
         									<h3>${article.productName}<br /></h3>
         								<p>
-        									${article.productDescription} </p>
+        									${article.productDescription} 
+										</p>
         								<p>
-        									<a class="btn btn-primary" href="http://localhost:8080/DBMS_Project5/ProductServlet?productID=${article.productID}" role="button">View
+											<!-- <a class="btn btn-primary" href="http://localhost:8080/DBMS_Project5/ProductServlet?productID=${article.productID}" role="button">View details &raquo;</a>-->
+        									<a class="btn btn-primary" href="http://localhost:8080/login.jsp" role="button">View
         									details &raquo;</a>
         								</p>
+										<c:choose>
+											<c:when test="${article.productCategoryID eq '1'}">
+												<span class="label label-danger">Bronze Discount Eligible!</span>
+											</c:when>
+											<c:when test="${article.productCategoryID eq '2'}">
+												<span class="label label-default">Silver Discount Eligible!</span>
+											</c:when>
+											<c:when test="${article.productCategoryID eq '3'}">
+												<span class="label label-warning">Gold Discount Eligible!</span>
+											</c:when>
+										</c:choose>	
         							</div>
         						</div>
         				</div>
