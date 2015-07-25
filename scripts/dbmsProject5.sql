@@ -144,25 +144,26 @@ INSERT INTO `products` (`productID`, `productPrice`, `productImage`, `productNam
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `userID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL AUTO_INCREMENT,
   `userName` varchar(255) NOT NULL,
   `userPassword` varchar(255) NOT NULL,
   `userCategoryID` int(11) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL,
-  `createdOn` datetime NOT NULL
+  `createdOn` datetime NOT NULL,
+  PRIMARY KEY(`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userID`, `userName`, `userPassword`, `userCategoryID`, `isAdmin`, `createdOn`) VALUES
-(1, 'admin', 'password', 1, 1, '2015-07-22 12:00:00'),
-(2, 'phillip', 'passmc', 2, 0, '2015-07-22 12:00:00'),
-(3, 'narita', 'passpa', 3, 0, '2015-07-22 12:00:00'),
-(4, 'jey', 'passjo', 1, 0, '2015-07-22 12:00:00'),
-(5, 'justin', 'passtu', 2, 0, '2015-07-22 12:00:00'),
-(6, 'ryan', 'passpe', 1, 0, '2015-07-22 12:00:00');
+INSERT INTO `users` (`userName`, `userPassword`, `userCategoryID`, `isAdmin`, `createdOn`) VALUES
+('admin', 'password', 1, 1, '2015-07-22 12:00:00'),
+('phillip', 'passmc', 2, 0, '2015-07-22 12:00:00'),
+('narita', 'passpa', 3, 0, '2015-07-22 12:00:00'),
+('jey', 'passjo', 1, 0, '2015-07-22 12:00:00'),
+('justin', 'passtu', 2, 0, '2015-07-22 12:00:00'),
+('ryan', 'passpe', 1, 0, '2015-07-22 12:00:00');
 
 --
 -- Indexes for dumped tables
@@ -198,7 +199,6 @@ ALTER TABLE `products`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`userID`),
   ADD UNIQUE KEY `userName` (`userName`),
   ADD UNIQUE KEY `userName_2` (`userName`),
   ADD KEY `userCategoryID` (`userCategoryID`);
