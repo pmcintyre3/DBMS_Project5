@@ -75,7 +75,7 @@ DROP TABLE IF EXISTS `orderDetails`;
 CREATE TABLE `orderDetails` (
   `orderNumber` int NOT NULL,
   `prodId` int NOT NULL,
-   PRIMARY KEY (`orderNumber`)
+   PRIMARY KEY (`orderNumber,prodId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- LOCK TABLES `orderDetails` WRITE;
