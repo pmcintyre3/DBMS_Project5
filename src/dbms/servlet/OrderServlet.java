@@ -57,6 +57,7 @@ public class OrderServlet extends HttpServlet {
 			
 			request.setAttribute("userOrderList",OrderDAO.getAllOrdersOfUser(userID));
 			request.setAttribute("totalUserPoints",UserDAO.getUserPoints(userID));
+			request.setAttribute("pointsRenewalDate", UserDAO.getPointsRenewalDate(userID));
 			
 			
 			Map<String, String> membershipMap =UserDAO.getUserCategory(userID);

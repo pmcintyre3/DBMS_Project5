@@ -133,7 +133,10 @@
 							<td style="padding: 0px;"><h3>
 									<small class="text-success">Points Balance:</small>
 									${totalUserPoints}
-								</h3></td>
+								</h3>
+							<small class="text-success">Points Renewed On:</small> ${pointsRenewalDate}
+							</td>
+							
 						</tr>
 					</tbody>
 				</table>
@@ -156,7 +159,7 @@
 					<tbody>
 						<c:forEach items="${userOrderList}" var="product">
 							<tr>
-								<th scope="row">1</th>
+								<th scope="row">${product.orderID}</th>
 								<td><a data-toggle="modal" data-target="#myModal_${product.productID}">${product.productName}</a>
 									<div class="modal fade" id="myModal_${product.productID}" tabindex="-1"
 										role="dialog" aria-labelledby="myModalLabel">
