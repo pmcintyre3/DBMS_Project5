@@ -21,7 +21,7 @@ public class LogoutServlet extends HttpServlet {
     	response.setContentType("text/html");
     	Cookie[] cookies = request.getCookies();
     	HttpSession session = request.getSession();
-    	System.out.println("Current sesion has USER ID="+session.getAttribute("userID"));;
+    	System.out.println("Current sesion has USER ID="+session.getAttribute("userID"));
     	if(cookies != null){
     	for(Cookie cookie : cookies){
     		if(cookie.getName().equals("JSESSIONID")){
@@ -35,7 +35,7 @@ public class LogoutServlet extends HttpServlet {
     	if(session != null){
     		session.invalidate();
     	}
-    	response.sendRedirect("index.html");
+    	response.sendRedirect("");
     }
 
 }
