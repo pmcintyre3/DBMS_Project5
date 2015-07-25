@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import dbms.model.User;
 
 /**
@@ -33,7 +35,7 @@ public class RegisterDAO {
         int rs = -1;
 
         try {
-
+        	String sha1password = DigestUtils.sha1Hex(pass);
             rs = -1;
             Class.forName(driver).newInstance();
             conn = DriverManager
@@ -41,7 +43,8 @@ public class RegisterDAO {
             pst = conn
                     .prepareStatement("INSERT INTO users (userName, userPassword, userCategoryID, isAdmin, createdOn) VALUES (?,?,?,?,?);");
             pst.setString(1, name);
-            pst.setString(2, pass);
+            
+            pst.setString(2, sha1password);
             pst.setInt(3, 0);
             pst.setInt(4, 0);
             pst.setTimestamp(5, new Timestamp(System.currentTimeMillis()));

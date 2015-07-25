@@ -78,7 +78,7 @@
 					%>
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"
 						role="button" aria-expanded="false"
-						style="text-transform: capitalize;"><b><%=user%></b> &nbsp; <span
+						><b><%=user%></b> &nbsp; <span
 						class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a

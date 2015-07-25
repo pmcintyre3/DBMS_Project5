@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import dbms.model.User;
 
 public class LoginDao {
@@ -25,13 +27,14 @@ public class LoginDao {
 		
 		
 		try {
+        		String sha1password = DigestUtils.sha1Hex(pass);
 				Class.forName(driver).newInstance();
 				conn = DriverManager
 						.getConnection(url + dbName, userName, password);
 				pst = conn
 						.prepareStatement("select userID from users where userName=? and userPassword=?");
 				pst.setString(1, name);
-				pst.setString(2, pass);
+				pst.setString(2, sha1password);
 	
 				rs = pst.executeQuery();
 				while(rs.next()){
