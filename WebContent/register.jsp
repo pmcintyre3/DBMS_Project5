@@ -59,66 +59,62 @@
 
 		<div class="row">
 			<br />
-			<div class="col-md-6" style="border-right: 1px solid #eee;">
-				<br />
-				<legend>New Customers</legend>
-				<p style="text-align: justify;">Lorem ipsum dolor sit amet,
-					consectetuer adipiscing elit, sed diam nonummy nibh euismod
-					tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
-					enim ad minim veniam, quis nostrud exerci tation ullamcorper
-					suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis
-					autem vel eum iriure dolor in hendrerit in vulputate velit esse
-					molestie consequat, vel illum dolore eu feugiat nulla facilisis at
-					vero eros et accumsan.</p>
-				<a href="register.jsp" class="btn btn-primary">Sign Up!</a>
-
-			</div>
-			<div class="col-md-6">
-				<br />
-				<form class="form-horizontal" action="LoginServlet" method="post">
-					<fieldset>
-						<legend>Registered Customers</legend>
-						<div class="bs-component" id="loginError">
+			<div class="col-lg-12">
+				<div class="well bs-component">
+					<form class="form-horizontal" action="RegisterServlet" method="post">
+						<fieldset>
+							<legend>Create new account:</legend>
+							<div class="bs-component" id="loginError">
 							<% String login_msg=(String)request.getAttribute("error");
 								if(login_msg!=null){ 
 									out.println("<div class='alert alert-dismissible alert-danger'>"
-												+"<button type='button' class='close' data-dismiss='alert'>×</button>"
+												+"<button type='button' class='close' data-dismiss='alert'>Ã—</button>"
 												+login_msg+".</div>");
 								}
-								String login_msg2=(String)request.getAttribute("loginSuccess");
-								if(login_msg2!=null){ 
-									out.println("<div class='alert alert-dismissible alert-success'>"
-												+"<button type='button' class='close' data-dismiss='alert'>×</button>"
-												+login_msg2+".</div>");
-								}
 							%>
-							
-						</div>
-						<div class="form-group">
-							<label for="inputUserName" class="col-lg-2 control-label">Username<span
-								class="text-danger">*</span></label>
-							<div class="col-lg-10">
-								<input type="text" class="form-control" id="userName"
-									name="userName" placeholder="Username">
 							</div>
-						</div>
-						<div class="form-group">
-							<label for="inputPassword" class="col-lg-2 control-label">Password<span
-								class="text-danger">*</span></label>
-							<div class="col-lg-10">
-								<input type="password" class="form-control" id="password"
-									name="password" placeholder="Password">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="userName" class="col-lg-2 control-label">Username</label>
+									<div class="col-lg-10">
+										<input type="text" class="form-control" name="userName" 
+											id="userName" placeholder="Username">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="password" class="col-lg-2 control-label">Password</label>
+									<div class="col-lg-10">
+										<input type="password" class="form-control" name="password" 
+											id="password" placeholder="Password">
+									</div>
+
+								</div>
+								<div class="col-lg-10 col-lg-offset-2">
+									<button type="submit" class="btn btn-success"
+									value="Register">Register</button>
+								</div>
 
 							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-lg-10 col-lg-offset-2">
-								<button type="submit" class="btn btn-success pull-right"
-									value="Login">Login</button>
-							</div>
-						</div>
-					</fieldset>
-				</form>
+							<!-- <div class="col-md-6">
+								<div class="form-group">
+									<label for="textArea" class="col-lg-2 control-label">Address</label>
+									<div class="col-lg-10">
+										<textarea class="form-control" rows="3" id="textArea"></textarea>
+									</div>
+								</div>
+								<div class="form-group pull-right" style="padding-top: 5px;">
+									<div class="col-lg-10">
+										
+										<button type="submit" class="btn btn-primary">Submit</button>
+									</div>
+								</div>
+							</div> -->
+							
+						</fieldset>
+					</form>
+					<div id="source-button" class="btn btn-primary btn-xs"
+						style="display: none;">&lt; &gt;</div>
+				</div>
 			</div>
 
 		</div>
