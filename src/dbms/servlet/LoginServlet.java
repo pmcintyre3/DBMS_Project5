@@ -98,7 +98,7 @@ public class LoginServlet extends HttpServlet {
 				RequestDispatcher rd;
 
 				if(u.getIsAdmin())
-					rd = request.getRequestDispatcher("admin.jsp");
+					rd = request.getRequestDispatcher("AdminServlet");
 				else
 					rd = request.getRequestDispatcher("loginSuccess.jsp");
 

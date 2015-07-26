@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
     <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     <c:set var="base" value="${fn:substring(url, 0, fn:length(url) - fn:length(req.requestURI))}${req.contextPath}/" />
 <!DOCTYPE html>
@@ -80,7 +81,7 @@
 		<div class="masthead">
 			<div class="row">
 				<div class="col-md-10">
-					<a href="admin.jsp"><img src="bootstrap/images/logo.png" alt=""></a> <br />
+					<a href="AdminServlet"><img src="bootstrap/images/logo.png" alt=""></a> <br />
 				</div>
 			</div>	
 			<nav class="navbar navbar-default">
@@ -184,10 +185,11 @@
 						<th>Username</th>
 						<th>User Category ID</th>
 						<th>Admin</th>
-						<th>Date Created</th>
+						<!-- <th>Date Created</th> -->
 					</tr>
 				</thead>
 				<tbody>
+				<!--
 					<tr class='clickable-row' data-toggle="modal" data-target='#userModal'>
 						<td>1</td>
 						<td>test</td>
@@ -204,6 +206,16 @@
 						<td>0</td>
 						<td>June 17, 2015</td>
 					</tr>
+					-->
+					<c:forEach items="${userList}" var="article">
+						<tr class='clickable-row' data-toggle="modal" data-target='#userModal'>
+							<td>${article.userID}</td>
+							<td>${article.userName}</td>
+							<td>${article.userCatID}</td>
+							<td>${article.isAdmin}</td>
+						</tr>
+					</c:forEach>
+					
 				</tbody>
 			</table>
 		</div>
