@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dbms.model.Product;
 
@@ -363,6 +365,57 @@ public class ProductDao {
 		
 		return returnProductID;  
 	}
+	
+	public static Map<String,Integer> getProductCountCategoryWise() {
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		Map<String,Integer> productList = new HashMap<String,Integer>();
+		
+		try {
+				Class.forName(driver).newInstance();
+				conn = DriverManager
+						.getConnection(url + dbName, userName, password);
+				pst = conn.prepareStatement("select count(products.productID) as count,categories.categoryName as categoryName "
+											+"from products, categories "
+											+"where products.productCategoryID=categories.categoryID "
+											+"group by products.productCategoryID");
+				rs = pst.executeQuery();
+				while(rs.next()){
+					productList.put(rs.getString("categoryName"),rs.getInt("count"));
+				}
+			} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			
+			if (conn != null) {
+				try {
+					conn.close();
+				
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pst != null) {
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return productList;  
+	}
+
 
 
 }
+

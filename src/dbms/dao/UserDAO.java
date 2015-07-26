@@ -33,7 +33,7 @@ public class UserDAO {
 			conn = DriverManager
 					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
-					.prepareStatement("select userID,userName,userCategoryID,isAdmin from users;");
+					.prepareStatement("select userID,userName,userCategoryID,isAdmin from users");
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				userList.add(new User(rs.getString("userID"), rs
@@ -385,5 +385,56 @@ public class UserDAO {
 
 		return pointsRenewalDate;
 	}
+	
+	
+	public static Map<String,Integer> getUserCountCategoryWise() {
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		Map<String,Integer> productList = new HashMap<String,Integer>();
+		
+		try {
+				Class.forName(driver).newInstance();
+				conn = DriverManager
+						.getConnection(url + dbName, dbUserName, password);
+				pst = conn.prepareStatement("select count(users.userID) as count,categories.categoryName as categoryName "
+											+"from users, categories "
+											+"where users.userCategoryID=categories.categoryID "
+											+"group by users.userCategoryID");
+				rs = pst.executeQuery();
+				while(rs.next()){
+					productList.put(rs.getString("categoryName"),rs.getInt("count"));
+				}
+			} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			
+			if (conn != null) {
+				try {
+					conn.close();
+				
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pst != null) {
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return productList;  
+	}
+
 
 }
