@@ -79,6 +79,7 @@
 									<div class="col-lg-10">
 										<input type="text" class="form-control" name="userName" 
 											id="userName" placeholder="Username">
+											<p class="help-block">Example: test@uga.edu</p>
 									</div>
 								</div>
 								<div class="form-group">
