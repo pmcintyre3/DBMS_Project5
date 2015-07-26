@@ -65,13 +65,14 @@
 			}
 		});
 		
-		$('#userData.table.table-striped.table-hover.clickable-row').on('click','td',function(e){
+		$('#userData > table > tbody').on('click','tr.clickable-row',function(e){
 			e.preventDefault();
 			
-			var id = $('#td_userID').html();
-			var name = $('#td_userName').html();
-			var catID = $('#td_userCatID').html();
-			var isAdmin = $('#td_userIsAdmin').html();
+			var userID=$(this).attr('id').split("_")[1];
+			var id = $('#td_userID'+'_'+userID).html();
+			var name = $('#td_userName'+'_'+userID).html();
+			var catID = $('#td_userCatID'+'_'+userID).html();
+			var isAdmin = $('#td_userIsAdmin'+'_'+userID).html();
 			
 			$('#insertUserID').val(id);
 			$('#insertUsername').val(name);
@@ -83,10 +84,11 @@
 		$('#catData table').on('click','tr',function(e){
 			e.preventDefault();
 			
-			var catID = $('#td_catID').html();
-			var name = $('#td_catName').html();
-			var catDisc = $('#td_catDiscount').html();
-			var mpr = $('#td_minPtsReq').html();
+			var catTrID=$(this).attr('id').split("_")[1];
+			var catID = $('#td_catID'+'_'+catTrID).html();
+			var name = $('#td_catName'+'_'+catTrID).html();
+			var catDisc = $('#td_catDiscount'+'_'+catTrID).html();
+			var mpr = $('#td_minPtsReq'+'_'+catTrID).html();
 			
 			$('#insertCatID').val(catID);
 			$('#insertCatName').val(name);
@@ -98,13 +100,14 @@
 		$('#prodData table').on('click', 'tr', function(e){
 			e.preventDefault();
 			
-			var prodID = $('#td_prodID').html();
-			var amount = $('#td_prodAmt').html();
-			var image = $('#td_prodImg').html();
-			var name = $('#td_prodName').html();
-			var desc = $('#td_prodDesc').html();
-			var pts = $('#td_prodPts').html();
-			var prodCatID = $('#td_prodCatID').html();
+			var prodTrID=$(this).attr('id').split("_")[1];
+			var prodID = $('#td_prodID'+'_'+prodTrID).html();
+			var amount = $('#td_prodAmt'+'_'+prodTrID).html();
+			var image = $('#td_prodImg'+'_'+prodTrID).html();
+			var name = $('#td_prodName'+'_'+prodTrID).html();
+			var desc = $('#td_prodDesc'+'_'+prodTrID).html();
+			var pts = $('#td_prodPts'+'_'+prodTrID).html();
+			var prodCatID = $('#td_prodCatID'+'_'+prodTrID).html();
 			
 			$('#insertProdID').val(prodID);
 			$('#insertPrice').val(amount);
@@ -119,9 +122,10 @@
 		$('#pointData table').on('click','tr',function(e){
 			e.preventDefault();
 			
-			var pUserID = $('#td_pUserID').html();
-			var nPts = $('#td_pPoints').html();
-			var renewDate = $('#td_pRenewDate').html();
+			var pointTrID=$(this).attr('id').split("_")[1];
+			var pUserID = $('#td_pUserID'+'_'+pointTrID).html();
+			var nPts = $('#td_pPoints'+'_'+pointTrID).html();
+			var renewDate = $('#td_pRenewDate'+'_'+pointTrID).html();
 			
 			$('#insertPointID').val(pUserID);
 			$('#insertNumPoints').val(nPts);
@@ -208,6 +212,7 @@
 						<ul class="dropdown-menu" role="menu">
 						<li>
 							<form action="LogoutServlet" method="post">
+								&nbsp;&nbsp;&nbsp;
 								<a id="logoutFormLink" href="#" value="Logout"
 									onclick="$(this).closest('form').submit();"
 									style="text-decoration: none; text-align: center;"><span
@@ -244,7 +249,7 @@
 			<hr />
 			<table class="table table-striped table-hover">
 				<thead>
-					<tr class='clickable-row' data-toggle="modal" data-target='#userModal'>
+					<tr data-toggle="modal" data-target='#userModal'>
 						<th>ID</th>
 						<th>Username</th>
 						<th>User Category ID</th>
@@ -253,11 +258,11 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${userList}" var="article">
-						<tr class='clickable-row' data-toggle="modal" data-target='#userModal'>
-							<td id='td_userID'>${article.userID}</td>
-							<td id='td_userName'>${article.userName}</td>
-							<td id='td_userCatID'>${article.userCategoryID}</td>
-							<td id='td_userIsAdmin'>${article.isAdmin}</td>
+						<tr class='clickable-row' data-toggle="modal" data-target='#userModal' id="tr_${article.userID}">
+							<td id='td_userID_${article.userID}'>${article.userID}</td>
+							<td id='td_userName_${article.userID}'>${article.userName}</td>
+							<td id='td_userCatID_${article.userID}'>${article.userCategoryID}</td>
+							<td id='td_userIsAdmin_${article.userID}'>${article.isAdmin}</td>
 						</tr>
 					</c:forEach>
 					
@@ -309,7 +314,7 @@
 					<c:forEach items="${productsList}" var="article">
 						<tr class='clickable-row' data-toggle="modal" data-target='#prodModal'>
 							<td id='td_prodID'>${article.productID}</td>
-							<td id='td_prodAmt'>\$${article.productPrice}</td>
+							<td id='td_prodAmt'>$${article.productPrice}</td>
 							<td id='td_prodImg'>${article.productImage}</td>
 							<td id='td_prodName'>${article.productName}</td>
 							<td id='td_prodDesc'>${article.productDescription}</td>
@@ -333,8 +338,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${pointsList}" var="article">
-						<tr class='clickable-row' data-toggle="modal" data-target='#pointModal'>
+					<c:forEach items="${pointsList}" var="article" >
+						<tr class='clickable-row' data-toggle="modal" data-target='#pointModal' id="pointTr">
 							<td id='td_pUserID'>${article.userID}</td>
 							<td id='td_pPoints'>${article.points}</td>
 							<td id='td_pRenewDate'>${article.pointsRenewalDate}</td>
@@ -371,10 +376,9 @@
 							
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default"
-										data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary buyProduct"
-										id='buyProduct_${productDetails.productID}'>Ok</button>
+						<button type="button" class="btn btn-default "
+										data-dismiss="modal" id="userModalClose">Close</button>
+						<button type="button" class="btn btn-primary">Ok</button>
 					</div>
 				</div>
 			</div>
@@ -410,8 +414,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default"
 										data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary buyProduct"
-										id='buyProduct_${productDetails.productID}'>Ok</button>
+						<button type="button" class="btn btn-primary">Ok</button>
 					</div>
 				</div>
 			</div>
@@ -455,8 +458,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default"
 										data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary buyProduct"
-										id='buyProduct_${productDetails.productID}'>Ok</button>
+						<button type="button" class="btn btn-primary">Ok</button>
 					</div>
 				</div>
 			</div>
@@ -488,8 +490,7 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default"
 										data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary buyProduct"
-										id='buyProduct_${productDetails.productID}'>Ok</button>
+						<button type="button" class="btn btn-primary">Ok</button>
 					</div>
 				</div>
 			</div>
