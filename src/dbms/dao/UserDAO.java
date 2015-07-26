@@ -17,7 +17,7 @@ public class UserDAO {
 	static String url = "jdbc:mysql://localhost:3306/";
 	static String dbName = "dbmsProject5";
 	static String driver = "com.mysql.jdbc.Driver";
-	static String userName = "root";
+	static String dbUserName = "root";
 	static String password = "root";
 
 	public static List<User> getAllUsers() {
@@ -31,7 +31,7 @@ public class UserDAO {
 		try {
 			Class.forName(driver).newInstance();
 			conn = DriverManager
-					.getConnection(url + dbName, userName, password);
+					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
 					.prepareStatement("select userID,userName,userCategoryID,isAdmin from users;");
 			rs = pst.executeQuery();
@@ -82,15 +82,13 @@ public class UserDAO {
 		try {
 			Class.forName(driver).newInstance();
 			conn = DriverManager
-					.getConnection(url + dbName, userName, password);
+					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
 					.prepareStatement("select userID,userName,userCategoryID,isAdmin from users where userName=?");
-			System.out.println("baher");
 			pst.setString(1, userName);
 			rs = pst.executeQuery();
 			while (rs.next()) {
 
-				System.out.println("aat");
 				user = new User(rs.getString("userID"),
 						rs.getString("userName"), rs.getInt("userCategoryID"),
 						rs.getBoolean("isAdmin"));
@@ -137,7 +135,7 @@ public class UserDAO {
 		try {
 			Class.forName(driver).newInstance();
 			conn = DriverManager
-					.getConnection(url + dbName, userName, password);
+					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
 					.prepareStatement("select points from points where userID=?");
 			pst.setInt(1, userID);
@@ -187,7 +185,7 @@ public class UserDAO {
 
 		try {
 			Class.forName(driver).newInstance();
-			conn = DriverManager.getConnection(url + dbName, userName, password);
+			conn = DriverManager.getConnection(url + dbName, dbUserName, password);
 			
 			if(pointsRenewalDate==null){
 				pst = conn.prepareStatement("update points set points = ? where userID=?");
@@ -247,7 +245,7 @@ public class UserDAO {
 		try {
 			Class.forName(driver).newInstance();
 			conn = DriverManager
-					.getConnection(url + dbName, userName, password);
+					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
 					.prepareStatement("select users.userCategoryID as categoryID, categories.categoryName as categoryName,categories.categoryDiscount as categoryDiscount from users, categories where users.userCategoryID=categories.categoryID AND users.userID=?");
 			pst.setInt(1, userID);
@@ -298,7 +296,7 @@ public class UserDAO {
 		try {
 			Class.forName(driver).newInstance();
 			conn = DriverManager
-					.getConnection(url + dbName, userName, password);
+					.getConnection(url + dbName, dbUserName, password);
 			pst = conn.prepareStatement("update users set userCategoryID=? where userID=?");
 			pst.setInt(1, userCategoryID);
 			pst.setInt(2, userID);
@@ -347,7 +345,7 @@ public class UserDAO {
 		try {
 			Class.forName(driver).newInstance();
 			conn = DriverManager
-					.getConnection(url + dbName, userName, password);
+					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
 					.prepareStatement("select pointsRenewalDate from points where points.userID=?");
 			pst.setInt(1, userID);
