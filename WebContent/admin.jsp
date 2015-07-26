@@ -143,7 +143,7 @@
 			url : "http://localhost:8080/DBMS_Project5/AdminServlet?method=getUsersGraph", //this is my servlet
 			success : function(result) 
 			{
-				
+				$('#pieChart1').html('');
 				var valueArray = [];
 				var temp=jQuery.parseJSON(result);
 				$.each(temp.userCountCategoryWiseList,function(key, value){
@@ -199,6 +199,7 @@
 					valueArray.push(valueObj);
 					
 				});
+				$('#pieChart1').html('');
 				$('#chartHeader').html("Products Distribution (acording to Category):")
 				var pie = new d3pie("pieChart1", {
 					  size: {
