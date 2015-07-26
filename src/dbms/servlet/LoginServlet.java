@@ -66,8 +66,8 @@ public class LoginServlet extends HttpServlet {
 
 			if ((result=LoginDao.validate(userName, password))!=-1) {
 
+				User userObj = UserDAO.getUser(userName);
 
-				
 				// Set session parameters
 				session = request.getSession(true);
 				session.setAttribute("user", userName);
@@ -79,31 +79,25 @@ public class LoginServlet extends HttpServlet {
 				cookieUserName.setMaxAge(30 * 60);
 				response.addCookie(cookieUserName);
 
-				// Send the successful response
-				//response.sendRedirect("loginSuccess.jsp");
-				//
-			
-				// Get all discounted products
-				request.setAttribute("discountedProductList",this.getAllDiscoutedProducts(result));
-				
-				//Get non-discounted products
-				request.setAttribute("nonDiscountedProductList",this.getAllNonDiscoutedProducts(result));
-				
-				//Get the user membership
-				Map<String, String> userCategory=UserDAO.getUserCategory(result);
-				request.setAttribute("userCategoryID",Integer.parseInt(userCategory.get("categoryID")));
-
-				User u = UserDAO.getUser(userName);
-
 				RequestDispatcher rd;
-
-				if(u.getIsAdmin())
+				if(userObj.getIsAdmin()){
 					rd = request.getRequestDispatcher("AdminServlet");
-				else
+				}
+				else{
+					// Get all discounted products
+					request.setAttribute("discountedProductList",this.getAllDiscoutedProducts(result));
+					
+					//Get non-discounted products
+					request.setAttribute("nonDiscountedProductList",this.getAllNonDiscoutedProducts(result));
+					
+					//Get the user membership
+					Map<String, String> userCategory=UserDAO.getUserCategory(result);
+					request.setAttribute("userCategoryID",Integer.parseInt(userCategory.get("categoryID")));
+
 					rd = request.getRequestDispatcher("loginSuccess.jsp");
-
+				}
 				rd.forward(request, response);
-
+				
 			} else {
 				request.setAttribute("error","Invalid Username or Password. Please try again.");
 				RequestDispatcher rd = request
