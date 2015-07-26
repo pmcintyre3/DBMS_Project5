@@ -66,6 +66,7 @@ public class LoginServlet extends HttpServlet {
 
 			if ((result=LoginDao.validate(userName, password))!=-1) {
 
+
 				
 				// Set session parameters
 				session = request.getSession(true);
@@ -91,8 +92,16 @@ public class LoginServlet extends HttpServlet {
 				//Get the user membership
 				Map<String, String> userCategory=UserDAO.getUserCategory(result);
 				request.setAttribute("userCategoryID",Integer.parseInt(userCategory.get("categoryID")));
-				
-				RequestDispatcher rd = request.getRequestDispatcher("loginSuccess.jsp");
+
+				User u = UserDAO.getUser(userName);
+
+				RequestDispatcher rd;
+
+				if(u.getIsAdmin())
+					rd = request.getRequestDispatcher("admin.jsp");
+				else
+					rd = request.getRequestDispatcher("loginSuccess.jsp");
+
 				rd.forward(request, response);
 
 			} else {
