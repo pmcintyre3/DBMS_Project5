@@ -239,8 +239,8 @@
 						<tr class='clickable-row' data-toggle="modal" data-target='#catModal'>
 							<td>${article.categoryID}</td>
 							<td>${article.categoryName}</td>
-							<td>${article.categoryDiscount}</td>
-							<td>${article.minPointsRequired}</td>
+							<td>${article.categoryDiscount}%</td>
+							<td>${article.minPointsRequired} points</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -263,15 +263,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class='clickable-row' data-toggle="modal" data-target='#prodModal'>
-						<td>1</td>
-						<td>$50</td>
-						<td>bootstrap/images/converse.jpg</td>
-						<td>Converse</td>
-						<td>Lorem ipsum dolor sit amet</td>
-						<td>15</td>
-						<td>1</td>
-					</tr>
+					<c:forEach items="${productsList}" var="article">
+						<tr class='clickable-row' data-toggle="modal" data-target='#prodModal'>
+							<td>${article.productID}</td>
+							<td>\$${article.productPrice}</td>
+							<td>${article.productImage}</td>
+							<td>${article.productName}</td>
+							<td>${article.productDescription}</td>
+							<td>${article.productPoints}</td>
+							<td>${article.productCategoryID}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 				<tbody>
 					<tr class='clickable-row' data-toggle="modal" data-target='#prodModal'>

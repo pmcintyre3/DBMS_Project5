@@ -43,7 +43,7 @@ public class HomeServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
 
-        request.setAttribute("productList",ProductDao.getAllProducts(0));
+        request.setAttribute("productList",ProductDao.getAllProducts());
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
 

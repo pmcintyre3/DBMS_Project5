@@ -17,7 +17,7 @@ public class ProductDao {
 	static String userName = "root";
 	static String password = "root";
 	
-	public static List<Product> getAllProducts(int categoryID) {
+	public static List<Product> getAllProducts() {
 		boolean status = false;
 		int id=-1;
 		Connection conn = null;
