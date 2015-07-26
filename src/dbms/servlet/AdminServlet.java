@@ -36,6 +36,18 @@ public class AdminServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+    protected void doGet(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+
+        request.setAttribute("userList",UserDAO.getAllUsers());
+        request.setAttribute("categoryList", CategoriesDAO.getAllCategories());
+        request.setAttribute("productsList", ProductDao.getAllProducts());
+        request.setAttribute("pointsList", PointsDAO.getAllPoints());
+        RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
+        rd.forward(request, response);
+
+    }
+
     protected void doPost(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
 

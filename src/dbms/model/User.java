@@ -1,19 +1,21 @@
 package dbms.model;
 
+import java.sql.Date;
 
 public class User {
 	
 
 	private String userID;
 	private String userName;
-	private int userCatID;
+	private int userCategoryID;
 	private boolean isAdmin;
+
 	
-	public User(String userID,String userName,int userCatID,boolean isAdmin){
+	public User(String userID,String userName,int userCategoryID,boolean isAdmin){
 		
 		this.userID=userID;
 		this.userName=userName;
-		this.userCatID=userCatID;
+		this.userCategoryID=userCategoryID;
 		this.isAdmin=isAdmin;
    }
 	
@@ -30,12 +32,12 @@ public class User {
  	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public int getUserCatID() {
-		return userCatID;
+	public int getUserCategoryID() {
+		return userCategoryID;
 	}
  
-	public void setUserCatID(int userCatID) {
-		this.userCatID = userCatID;
+	public void setUserCategoryID(int userCategoryID) {
+		this.userCategoryID = userCategoryID;
 	}
 	public boolean getIsAdmin() {
 		return isAdmin;

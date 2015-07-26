@@ -49,4 +49,13 @@ public class HomeServlet extends HttpServlet {
 
     }
 
+    protected void doPost(HttpServletRequest request,
+                         HttpServletResponse response) throws ServletException, IOException {
+
+        request.setAttribute("productList",ProductDao.getAllProducts());
+        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+        rd.forward(request, response);
+
+    }
+
 }

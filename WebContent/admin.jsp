@@ -63,8 +63,70 @@
 				$('#pointData').siblings('.container-fluid').hide();
 				$('#pointData').show();	
 			}
-		})
+		});
 		
+		$('#userData.table.table-striped.table-hover.clickable-row').on('click','td',function(e){
+			e.preventDefault();
+			
+			var id = $('#td_userID').html();
+			var name = $('#td_userName').html();
+			var catID = $('#td_userCatID').html();
+			var isAdmin = $('#td_userIsAdmin').html();
+			
+			$('#insertUserID').val(id);
+			$('#insertUsername').val(name);
+			$('#insertCatID').val(catID);
+			$('#insertIsAdmin').val(isAdmin);
+			
+		});
+		
+		$('#catData table').on('click','tr',function(e){
+			e.preventDefault();
+			
+			var catID = $('#td_catID').html();
+			var name = $('#td_catName').html();
+			var catDisc = $('#td_catDiscount').html();
+			var mpr = $('#td_minPtsReq').html();
+			
+			$('#insertCatID').val(catID);
+			$('#insertCatName').val(name);
+			$('#insertCatDiscount').val(catDisc);
+			$('#insertMinPtsReq').val(mpr);
+			
+		});
+		
+		$('#prodData table').on('click', 'tr', function(e){
+			e.preventDefault();
+			
+			var prodID = $('#td_prodID').html();
+			var amount = $('#td_prodAmt').html();
+			var image = $('#td_prodImg').html();
+			var name = $('#td_prodName').html();
+			var desc = $('#td_prodDesc').html();
+			var pts = $('#td_prodPts').html();
+			var prodCatID = $('#td_prodCatID').html();
+			
+			$('#insertProdID').val(prodID);
+			$('#insertPrice').val(amount);
+			$('#insertProdImg').val(image);
+			$('#insertProdName').val(name);
+			$('#insertDescription').val(desc);
+			$('#insertPoints').val(pts);
+			$('#insertProdCatID').val(prodCatID);
+			
+		});
+		
+		$('#pointData table').on('click','tr',function(e){
+			e.preventDefault();
+			
+			var pUserID = $('#td_pUserID').html();
+			var nPts = $('#td_pPoints').html();
+			var renewDate = $('#td_pRenewDate').html();
+			
+			$('#insertPointID').val(pUserID);
+			$('#insertNumPoints').val(nPts);
+			$('#insertPtRenewDt').val(renewDate);
+		});
 	});
 </script>
 	
@@ -187,34 +249,15 @@
 						<th>Username</th>
 						<th>User Category ID</th>
 						<th>Admin</th>
-						<!-- <th>Date Created</th> -->
 					</tr>
 				</thead>
 				<tbody>
-				<!--
-					<tr class='clickable-row' data-toggle="modal" data-target='#userModal'>
-						<td>1</td>
-						<td>test</td>
-						<td>0</td>
-						<td>0</td>
-						<td>Jan 1, 2015</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr class='clickable-row' data-toggle="modal" data-target='#userModal'>
-						<td>2</td>
-						<td>Allan</td>
-						<td>2</td>
-						<td>0</td>
-						<td>June 17, 2015</td>
-					</tr>
-					-->
 					<c:forEach items="${userList}" var="article">
 						<tr class='clickable-row' data-toggle="modal" data-target='#userModal'>
-							<td>${article.userID}</td>
-							<td>${article.userName}</td>
-							<td>${article.userCatID}</td>
-							<td>${article.isAdmin}</td>
+							<td id='td_userID'>${article.userID}</td>
+							<td id='td_userName'>${article.userName}</td>
+							<td id='td_userCatID'>${article.userCategoryID}</td>
+							<td id='td_userIsAdmin'>${article.isAdmin}</td>
 						</tr>
 					</c:forEach>
 					
@@ -237,10 +280,10 @@
 				<tbody>
 					<c:forEach items="${categoryList}" var="article">
 						<tr class='clickable-row' data-toggle="modal" data-target='#catModal'>
-							<td>${article.categoryID}</td>
-							<td>${article.categoryName}</td>
-							<td>${article.categoryDiscount}%</td>
-							<td>${article.minPointsRequired} points</td>
+							<td id='td_catID'>${article.categoryID}</td>
+							<td id='td_catName'>${article.categoryName}</td>
+							<td id='td_catDiscount'>${article.categoryDiscount}%</td>
+							<td id='td_minPtsReq'>${article.minPointsRequired} points</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -265,13 +308,13 @@
 				<tbody>
 					<c:forEach items="${productsList}" var="article">
 						<tr class='clickable-row' data-toggle="modal" data-target='#prodModal'>
-							<td>${article.productID}</td>
-							<td>\$${article.productPrice}</td>
-							<td>${article.productImage}</td>
-							<td>${article.productName}</td>
-							<td>${article.productDescription}</td>
-							<td>${article.productPoints}</td>
-							<td>${article.productCategoryID}</td>
+							<td id='td_prodID'>${article.productID}</td>
+							<td id='td_prodAmt'>\$${article.productPrice}</td>
+							<td id='td_prodImg'>${article.productImage}</td>
+							<td id='td_prodName'>${article.productName}</td>
+							<td id='td_prodDesc'>${article.productDescription}</td>
+							<td id='td_prodPts'>${article.productPoints}</td>
+							<td id='td_prodCatID'>${article.productCategoryID}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -291,10 +334,10 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${pointsList}" var="article">
-						<tr class='clickable-row' data-toggle="modal" data-target='#catModal'>
-							<td>${article.userID}</td>
-							<td>${article.points}</td>
-							<td>${article.pointsRenewalDate}</td>
+						<tr class='clickable-row' data-toggle="modal" data-target='#pointModal'>
+							<td id='td_pUserID'>${article.userID}</td>
+							<td id='td_pPoints'>${article.points}</td>
+							<td id='td_pRenewDate'>${article.pointsRenewalDate}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -314,8 +357,8 @@
 					</div>
 					<div class="modal-body">
 					
-						<label for='#insertID'>User ID</label>
-						<input type='text' id='insertID' class="form-control" placeholder='User ID' disabled>
+						<label for='#insertUserID'>User ID</label>
+						<input type='text' id='insertUserID' class="form-control" placeholder='User ID' value='' disabled>
 						<br />
 						<label for='#insertUsername'>Username</label>
 						<input type='text' id='insertUsername' class="form-control" placeholder='username'>
@@ -325,9 +368,6 @@
 						<br />
 						<label for='#insertisAdmin'>Admin Status</label>
 						<input type='text' id='insertIsAdmin' class="form-control" placeholder='Admin Status'>
-						<br />
-						<label for='#insertRegisterDate'>Date Registered</label>
-						<input type='text' id='insertRegisterDate' class="form-control" placeholder='Date Registered'>
 							
 					</div>
 					<div class="modal-footer">
@@ -353,8 +393,8 @@
 					</div>
 					<div class="modal-body">
 					
-						<label for='#insertID'>Category ID</label>
-						<input type='text' id='insertID' class="form-control" placeholder='Category ID' disabled>
+						<label for='#insertCatID'>Category ID</label>
+						<input type='text' id='insertCatID' class="form-control" placeholder='Category ID' disabled>
 						<br />
 						<label for='#insertCatName'>Category Name</label>
 						<input type='text' id='insertCatName' class="form-control" placeholder='Category Name'>
@@ -390,11 +430,14 @@
 					</div>
 					<div class="modal-body">
 					
-						<label for='#insertID'>Product ID</label>
-						<input type='text' id='prodID' class="form-control" placeholder='Product ID' disabled>
+						<label for='#insertProdID'>Product ID</label>
+						<input type='text' id='insertProdID' class="form-control" placeholder='Product ID' disabled>
 						<br />
 						<label for='#insertPrice'>Price</label>
 						<input type='text' id='insertPrice' class="form-control" placeholder='Price'>
+						<br />
+						<label for='#insertProdImg'>Product Image URL</label>
+						<input type='text' id='insertProdImg' class="form-control" placeholder='Product Image URL'>
 						<br />
 						<label for='#insertProdName'>Product Name</label>
 						<input type='text' id='insertProdName' class="form-control" placeholder='Product Name'>
@@ -404,6 +447,9 @@
 						<br />
 						<label for='#insertPoints'>Points Awarded</label>
 						<input type='text' id='insertPoints' class="form-control" placeholder='Points Awarded'>
+						<br />
+						<label for='#insertProdCatID'>Product Discount Category</label>
+						<input type='text' id='insertProdCatID' class="form-control" placeholder='Product Discount Category'>
 							
 					</div>
 					<div class="modal-footer">
@@ -429,8 +475,8 @@
 					</div>
 					<div class="modal-body">
 					
-						<label for='#insertID'>Point ID</label>
-						<input type='text' id='insertID' class="form-control" placeholder='Points ID' disabled>
+						<label for='#insertPointID'>Point ID</label>
+						<input type='text' id='insertPointID' class="form-control" placeholder='Points ID' disabled>
 						<br />
 						<label for='#insertNumPoints'>Number of Points</label>
 						<input type='text' id='insertNumPoints' class="form-control" placeholder='numPoints'>
