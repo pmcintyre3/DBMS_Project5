@@ -275,17 +275,6 @@
 						</tr>
 					</c:forEach>
 				</tbody>
-				<tbody>
-					<tr class='clickable-row' data-toggle="modal" data-target='#prodModal'>
-						<td>2</td>
-						<td>$60</td>
-						<td>bootstrap/images/asics.jpg</td>
-						<td>Asics</td>
-						<td>Fusce neque dolor, imperdiet</td>
-						<td>17</td>
-						<td>2</td>
-					</tr>
-				</tbody>
 			</table>
 		</div>
 		
@@ -301,18 +290,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class='clickable-row' data-toggle="modal" data-target='#pointModal'>
-						<td>1</td>
-						<td>25</td>
-						<td>2015-01-23 12:00:00</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr class='clickable-row' data-toggle="modal" data-target='#pointModal'>
-						<td>2</td>
-						<td>109</td>
-						<td>2015-07-15 07:30:00</td>
-					</tr>
+					<c:forEach items="${pointsList}" var="article">
+						<tr class='clickable-row' data-toggle="modal" data-target='#catModal'>
+							<td>${article.userID}</td>
+							<td>${article.points}</td>
+							<td>${article.pointsRenewalDate}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
