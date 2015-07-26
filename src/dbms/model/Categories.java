@@ -5,6 +5,7 @@ public class Categories {
 	private int categoryID;
 	private String categoryName;
 	private int categoryDiscount;
+	private int minPointsRequired;
 	
 	
 	public Categories(int categoryID,String categoryName, int categoryDiscount)
@@ -13,6 +14,13 @@ public class Categories {
 		this.categoryName=categoryName;
 		this.categoryDiscount=categoryDiscount;
 		
+	}
+
+	public Categories(int categoryID, String categoryName, int categoryDiscount, int minPointsRequired){
+		this.categoryID=categoryID;
+		this.categoryName=categoryName;
+		this.categoryDiscount=categoryDiscount;
+		this.minPointsRequired=minPointsRequired;
 	}
 	
 	public int getCategoryID() {
@@ -38,6 +46,10 @@ public class Categories {
 	public void setCategoryDiscount(int categoryDiscount) {
 		this.categoryDiscount = categoryDiscount;
 	}
+
+	public int getMinPointsRequired(){ return minPointsRequired; }
+
+	public void setMinPointsRequired(int minPointsRequired){ this.minPointsRequired = minPointsRequired; }
 
 
 }

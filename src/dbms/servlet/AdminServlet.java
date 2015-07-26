@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dbms.dao.CategoriesDAO;
 import dbms.dao.LoginDao;
 import dbms.dao.ProductDao;
 import dbms.dao.UserDAO;
@@ -41,6 +42,7 @@ public class AdminServlet extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
 
         request.setAttribute("userList",UserDAO.getAllUsers());
+        request.setAttribute("categoryList", CategoriesDAO.getAllCategories());
         //request.setAttribute("productList",ProductDao.getAllProducts(0));
         RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
         rd.forward(request, response);
@@ -51,6 +53,7 @@ public class AdminServlet extends HttpServlet {
                          HttpServletResponse response) throws ServletException, IOException {
 
         request.setAttribute("userList",UserDAO.getAllUsers());
+        request.setAttribute("categoryList", CategoriesDAO.getAllCategories());
         //request.setAttribute("productList",ProductDao.getAllProducts(0));
         RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
         rd.forward(request, response);

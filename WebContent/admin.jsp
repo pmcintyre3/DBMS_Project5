@@ -4,6 +4,7 @@
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="d" %>
     <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     <c:set var="base" value="${fn:substring(url, 0, fn:length(url) - fn:length(req.requestURI))}${req.contextPath}/" />
+	<d:set var="base" value="${fn:substring(url, 0, fn:length(url) - fn:length(req.requestURI))}${req.contextPath}/" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,6 +64,7 @@
 				$('#pointData').show();	
 			}
 		})
+		
 	});
 </script>
 	
@@ -233,20 +235,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class='clickable-row' data-toggle="modal" data-target='#catModal'>
-						<td>1</td>
-						<td>Silver</td>
-						<td>10</td>
-						<td>25</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr class='clickable-row' data-toggle="modal" data-target='#catModal'>
-						<td>1</td>
-						<td>Gold</td>
-						<td>25</td>
-						<td>55</td>
-					</tr>
+					<c:forEach items="${categoryList}" var="article">
+						<tr class='clickable-row' data-toggle="modal" data-target='#catModal'>
+							<td>${article.categoryID}</td>
+							<td>${article.categoryName}</td>
+							<td>${article.categoryDiscount}</td>
+							<td>${article.minPointsRequired}</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
