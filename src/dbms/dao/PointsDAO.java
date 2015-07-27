@@ -1,10 +1,6 @@
 package dbms.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +70,56 @@ public class PointsDAO {
         }
 
         return pointsList;
+    }
+
+    public static int registerUserPoints (int uID) {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        int rs = -1;
+
+        try {
+            rs = -1;
+            Class.forName(driver).newInstance();
+            conn = DriverManager
+                    .getConnection(url + dbName, userName, password);
+            pst = conn
+                    .prepareStatement("INSERT INTO points (userID, points, userCategoryID, pointsRenewalDate) VALUES (?,?,?);");
+            pst.setInt(1, uID);
+            pst.setInt(2, 0);
+            pst.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+
+            rs = pst.executeUpdate();
+            pst.clearParameters();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            //System.out.println("rs: " + rs);
+            if (conn != null) {
+                try {
+                    conn.close();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pst != null) {
+                try {
+                    pst.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+//            if (rs != null) {
+//                try {
+//                    rs.close();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+        }
+        return rs;
+        //return userList;
     }
 
 }
