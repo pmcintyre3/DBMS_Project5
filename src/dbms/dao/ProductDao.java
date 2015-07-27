@@ -19,9 +19,12 @@ public class ProductDao {
 	static String userName = "root";
 	static String password = "root";
 	
+	/***
+	 * Function to retrieve all the available products
+	 * 
+	 * @return List<Product>
+	 */
 	public static List<Product> getAllProducts() {
-		boolean status = false;
-		int id=-1;
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -75,9 +78,14 @@ public class ProductDao {
 		return productList;  
 	}
 	
+	/**
+	 * Function to retrieve a specific product.
+	 * 
+	 * @param int productID
+	 * @param int categoryID
+	 * @return Product
+	 */
 	public static Product getProduct(int productID,int categoryID) {
-		boolean status = false;
-		int id=-1;
 		Connection conn = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -87,7 +95,6 @@ public class ProductDao {
 				Class.forName(driver).newInstance();
 				conn = DriverManager
 						.getConnection(url + dbName, userName, password);
-				//pst = conn.prepareStatement("select productID,productName, productDescription,productImage,productPrice,productPoints,productCategoryID from products where productID=?");
 				pst=conn.prepareStatement(" select "
 										  +"products.productID as productID, "
 										  +"products.productCategoryId as productCategoryID, categories1.categoryName as productCategoryName,categories1.categoryDiscount as productCategoryDiscount, "
@@ -146,6 +153,9 @@ public class ProductDao {
 	/**
 	 * Function to get all the products which are
 	 * available at a discount rate to a specific User
+	 * @param int userID
+	 * @return List<Product>
+	 * 
 	 */
 	public static List<Product> getDiscountedProducts(int userID) {
 		Connection conn = null;
@@ -159,14 +169,15 @@ public class ProductDao {
 						.getConnection(url + dbName, userName, password);
 				
 				String selectQuery="select "
-								   +"products.productID as productID, "
+								   +"distinct(products.productID) as productID, "
 								   +"products.productCategoryId as productCategoryID, categories2.categoryName as productCategoryName,categories2.categoryDiscount as productCategoryDiscount, "
 								   +"products.productName as productName, products.productDescription as productDescription, products.productImage as productImage, "
 								   +"products.productPrice as productPrice,products.productPoints as productPoints "
-								   +"from users,products,categories as categories1, categories as categories2 "
+								   +"from users,points,products,categories as categories1, categories as categories2 "
 								   +"where products.productCategoryID=categories2.categoryID "
-								   +"AND users.userCategoryID=categories1.categoryID "
-								   +"AND users.userCategoryID>=products.productCategoryID "
+								   +"AND users.userID=points.userID "
+								   +"AND points.userCategoryID=categories1.categoryID  "
+								   +"AND points.userCategoryID>=products.productCategoryID "
 								   +"AND users.userID=? "
 								   +"order by products.productID";
 
@@ -218,9 +229,10 @@ public class ProductDao {
 		return productList;  
 	}
 	
-	/**
-	 * Function to get all the products which are
-	 * available at a discount rate to a specific User
+	/***
+	 * 	Function to get all the products which are 
+	 *  openly available i.e. Products which don't have
+	 *  any discounts. 
 	 */
 	public static List<Product> getNonDiscountedProducts(int userID) {
 		Connection conn = null;
@@ -241,11 +253,12 @@ public class ProductDao {
 								   +"from products,categories "
 								   +"where products.productCategoryID=categories.categoryID "
 								   +"AND products.productID NOT IN " 
-								   +"(select products.productID as productID "
-								   +"from users,products,categories as categories1, categories as categories2 " 
-								   +"where products.productCategoryID=categories2.categoryID " 
-								   +"AND users.userCategoryID=categories1.categoryID " 
-								   +"AND users.userCategoryID>=products.productCategoryID " 
+								   +"(select distinct(products.productID) as productID "
+								   +"from users,points,products,categories as categories1, categories as categories2 " 
+								   +"where products.productCategoryID=categories2.categoryID "
+								   +"AND users.userID=points.userID "
+								   +"AND points.userCategoryID=categories1.categoryID " 
+								   +"AND points.userCategoryID>=products.productCategoryID " 
 								   +"AND users.userID=? "
 								   +"order by products.productID)" ;
 
@@ -298,8 +311,9 @@ public class ProductDao {
 	}
 	
 	/**
-	 * Function to get all the products which are
-	 * available at a discount rate to a specific User
+	 * Function to check if a product is discounted
+	 * for a given User.
+	 * 
 	 */
 	public static int checkIfProductDiscounted(int productID,int userID) {
 		Connection conn = null;
@@ -319,11 +333,12 @@ public class ProductDao {
 								   +"where products.productCategoryID=categories.categoryID "
 								   +"AND products.productID=? "
 								   +"AND products.productID NOT IN " 
-								   +"(select products.productID as productID "
-								   +"from users,products,categories as categories1, categories as categories2 " 
-								   +"where products.productCategoryID=categories2.categoryID " 
-								   +"AND users.userCategoryID=categories1.categoryID " 
-								   +"AND users.userCategoryID>=products.productCategoryID " 
+								   +"(select distinct(products.productID) as productID "
+								   +"from users,points,products,categories as categories1, categories as categories2 " 
+								   +"where products.productCategoryID=categories2.categoryID "
+								   +"AND users.userID=points.userID "
+								   +"AND points.userCategoryID=categories1.categoryID " 
+								   +"AND points.userCategoryID>=products.productCategoryID " 
 								   +"AND users.userID=? "
 								   +"order by products.productID)" ;
 
@@ -366,6 +381,11 @@ public class ProductDao {
 		return returnProductID;  
 	}
 	
+	/***
+	 * Retrieves the count of products  
+	 * according to the Category
+	 * @return
+	 */
 	public static Map<String,Integer> getProductCountCategoryWise() {
 		Connection conn = null;
 		PreparedStatement pst = null;

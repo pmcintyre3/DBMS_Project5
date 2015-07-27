@@ -41,12 +41,12 @@ public class RegisterDAO {
             conn = DriverManager
                     .getConnection(url + dbName, userName, password);
             pst = conn
-                    .prepareStatement("INSERT INTO users (userName, userPassword, userCategoryID, isAdmin, createdOn) VALUES (?,?,?,?,?);");
+                    .prepareStatement("INSERT INTO users (userName, userPassword, isAdmin, createdOn) VALUES (?,?,?,?,?);");
             pst.setString(1, name);
             
             pst.setString(2, sha1password);
             pst.setInt(3, 0);
-            pst.setInt(4, 0);
+          //  pst.setInt(4, 0);
             pst.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
 
             rs = pst.executeUpdate();

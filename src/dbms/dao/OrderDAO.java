@@ -21,6 +21,14 @@ public class OrderDAO {
 	static String password = "root";
 
 
+	/***
+	 * 
+	 * Function to return all the products
+	 * a particular User has ordered.
+	 * 
+	 * @param int userID
+	 * @return
+	 */
 	public static List<UserOrder> getAllOrdersOfUser(int userID){
 		
 		Connection conn = null;
@@ -71,6 +79,16 @@ public class OrderDAO {
 		
 	}
 
+	/***
+	 * 
+	 * Function to place an order
+	 * 
+	 * @param int userID
+	 * @param int productID
+	 * @param double totalOrderPrice
+	 * @param datetime orderedOn
+	 * @return
+	 */
 	
 	public static boolean putOrder(int userID,int productID,double totalOrderPrice,Date orderedOn){
 		boolean result=false;
@@ -142,109 +160,5 @@ public class OrderDAO {
 		return result;
 		
 	}
-//	public static List<User> getAllUsers() {
-//		boolean status = false;
-//		int id=-1;
-//		Connection conn = null;
-//		PreparedStatement pst = null;
-//		ResultSet rs = null;
-//		List<User> userList = new ArrayList<User>();
-//		
-//		try {
-//				Class.forName(driver).newInstance();
-//				conn = DriverManager
-//						.getConnection(url + dbName, userName, password);
-//				pst = conn.prepareStatement("select id,user,catId,admin from users;");
-//				rs = pst.executeQuery();
-//				while(rs.next()){
-//					userList.add(new User(rs.getString("id"),
-//                            					rs.getString("user"),
-//                            					rs.getInt("catId"),
-//                            					rs.getBoolean("admin")
-//                            					                            					
-//                            		));
-//				}
-//			} catch (Exception e) {
-//			System.out.println(e);
-//		} finally {
-//			
-//			if (conn != null) {
-//				try {
-//					conn.close();
-//				
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			if (pst != null) {
-//				try {
-//					pst.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			if (rs != null) {
-//				try {
-//					rs.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		
-//		return userList;  
-//	}
-//	
-//	public static User getUser(String userName) {
-//		Connection conn = null;
-//		PreparedStatement pst = null;
-//		ResultSet rs = null;
-//		User user = null;
-//		
-//		try {
-//				Class.forName(driver).newInstance();
-//				conn = DriverManager
-//						.getConnection(url + dbName, userName, password);
-//				pst = conn.prepareStatement("select id,user,catId,admin from users where user=?;");
-//				pst.setString(1, userName);
-//				rs = pst.executeQuery();
-//				while(rs.next()){
-//					                       					
-//
-//					user = new User(rs.getString("id"),
-//		        					rs.getString("user"),
-//		        					rs.getInt("catId"),
-//		        					rs.getBoolean("admin")
-//        					);
-//				}
-//			} catch (Exception e) {
-//			System.out.println(e);
-//		} finally {
-//			
-//			if (conn != null) {
-//				try {
-//					conn.close();
-//				
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			if (pst != null) {
-//				try {
-//					pst.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//			if (rs != null) {
-//				try {
-//					rs.close();
-//				} catch (SQLException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		
-//		return user;  
-//	}
+
 }

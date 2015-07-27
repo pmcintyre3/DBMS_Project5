@@ -27,6 +27,30 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
+<style>
+  .axis path, .axis line
+        {
+            fill: none;
+            stroke: #777;
+            shape-rendering: crispEdges;
+        }
+        
+        .axis text
+        {
+            font-family: 'Arial';
+            font-size: 13px;
+        }
+        .tick
+        {
+            stroke-dasharray: 1, 2;
+        }
+        .bar
+        {
+            fill: FireBrick;
+        }
+        
+
+</style>
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <!--     <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
@@ -40,6 +64,76 @@
 	<script src="bootstrap/js/d3pie.min.js"></script>
 
 <script type="text/javascript">
+function InitChart(barData) {
+
+	 
+	  var vis = d3.select('#visualisation'),
+	    WIDTH = 500,
+	    HEIGHT = 300,
+	    MARGINS = {
+	      top: 20,
+	      right: 20,
+	      bottom: 20,
+	      left: 50
+	    },
+	    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
+	      return d.x;
+	    })),
+
+
+	    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
+	      d3.max(barData, function (d) {
+	        return d.y;
+	      })
+	    ]),
+
+	    xAxis = d3.svg.axis()
+	      .scale(xRange)
+	      .tickSize(5)
+	      .tickSubdivide(true),
+
+	    yAxis = d3.svg.axis()
+	      .scale(yRange)
+	      .tickSize(5)
+	      .orient("left")
+	      .tickSubdivide(true);
+
+
+	  vis.append('svg:g')
+	    .attr('class', 'x axis')
+	    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+	    .call(xAxis);
+
+	  vis.append('svg:g')
+	    .attr('class', 'y axis')
+	    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+	    .call(yAxis);
+
+	  vis.selectAll('rect')
+	    .data(barData)
+	    .enter()
+	    .append('rect')
+	    .attr('x', function (d) {
+	      return xRange(d.x);
+	    })
+	    .attr('y', function (d) {
+	      return yRange(d.y);
+	    })
+	    .attr('width', xRange.rangeBand())
+	    .attr('height', function (d) {
+	      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
+	    })
+	    .attr('fill', 'grey')
+	    .on('mouseover',function(d){
+	      d3.select(this)
+	        .attr('fill','blue');
+	    })
+	    .on('mouseout',function(d){
+	      d3.select(this)
+	        .attr('fill','grey');
+	    });
+
+	}
 	$(document).ready(function() {
 		
 		$('li').click(function(){
@@ -182,6 +276,78 @@
 	});
 	
 
+	$('#overviewData > div > ul.nav-stacked > li ').on('click','a#productSalesLeftMenu',function(e){
+	//	$.ajax({
+		 	$('#chartHeader').html("No. of products sold (acording to Category):")
+			$('#pieChart1').html('');
+			$('#pieChart1').html('<svg id="visualisation" width="500" height="300"></svg>');
+			 var barData = [{
+				    'x': 1,
+				    'y': 5
+				  }, {
+				    'x': 20,
+				    'y': 20
+				  }, {
+				    'x': 40,
+				    'y': 10
+				  }, {
+				    'x': 60,
+				    'y': 40
+				  }, {
+				    'x': 80,
+				    'y': 5
+				  }, {
+				    'x': 100,
+				    'y': 60
+				  }];
+
+			InitChart(barData);
+			
+			
+// 			type : "get",
+// 			url : "http://localhost:8080/DBMS_Project5/AdminServlet?method=getProductsSalesGraph", //this is my servlet
+// 			success : function(result) 
+// 			{
+				
+// 				var valueArray = [];
+// 				var temp=jQuery.parseJSON(result);
+// 				$.each(temp.productCountCategoryWiseList,function(key, value){
+// 					console.log(key+":"+value);
+// 					var valueObj={};
+// 					valueObj.label=key;
+// 					valueObj.value=value;
+// 					valueArray.push(valueObj);
+					
+// 				});
+				
+// 				$('#chartHeader').html("Product Sales (acording to Category):")
+// 				var pie = new d3pie("pieChart1", {
+// 					  size: {
+// 							"canvasHeight": 300,
+// 							"canvasWidth": 390,
+// 							"pieOuterRadius": "90%"
+// 						},
+// 					  labels: {
+// 					    inner: {
+// 					      format: "none"
+// 					    }
+// 					  },
+// 					  data: {
+// 					    content: valueArray
+// 					  },
+// 					  tooltips: {
+// 					    enabled: true,
+// 					    type: "placeholder",
+// 					    string: "{label}, {value}, {percentage}%"
+// 					  }
+// 					});
+
+// 			}
+// 		});
+
+	});
+	
+
 	$('#overviewData > div > ul.nav-stacked > li ').on('click','a#productLeftMenu',function(e){
 		$.ajax({
 			type : "get",
@@ -228,7 +394,6 @@
 	});
 	
 	});
-
 	
 </script>
 
@@ -338,6 +503,7 @@
 				<ul class="nav nav-pills nav-stacked">
  					<li class="active"><a href="#" id="userLeftMenu">Users</a></li>
  					<li><a href="#" id="productLeftMenu">Product</a></li>
+ 					<li><a href="#" id="productSalesLeftMenu">Product Sales</a></li>
  				</ul>
 			</div>
 			<div class="col-md-7">

@@ -21,9 +21,12 @@ public class PointsDAO {
     static String userName = "root";
     static String password = "root";
 
+    /**
+     * Function to retrieve User's points
+     * 
+     * @return List<Points>
+     */
     public static List<Points> getAllPoints() {
-        boolean status = false;
-        int id=-1;
         Connection conn = null;
         PreparedStatement pst = null;
         ResultSet rs = null;

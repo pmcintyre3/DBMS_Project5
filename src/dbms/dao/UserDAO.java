@@ -20,6 +20,12 @@ public class UserDAO {
 	static String dbUserName = "root";
 	static String password = "root";
 
+	
+	
+	/***
+	 * Function to retrieve all the Users
+	 * @return List<User>
+	 */
 	public static List<User> getAllUsers() {
 		boolean status = false;
 		int id = -1;
@@ -33,7 +39,9 @@ public class UserDAO {
 			conn = DriverManager
 					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
-					.prepareStatement("select userID,userName,userCategoryID,isAdmin from users");
+					.prepareStatement("select users.userID,userName,points.userCategoryID as userCategoryID,isAdmin "
+									+"from users,points "
+									+"where users.userID=points.userID");
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				userList.add(new User(rs.getString("userID"), rs
@@ -73,6 +81,11 @@ public class UserDAO {
 		return userList;
 	}
 
+	/**
+	 * Function to retrieve a particular User
+	 * @param userName
+	 * @return
+	 */
 	public static User getUser(String userName) {
 		Connection conn = null;
 		PreparedStatement pst = null;
@@ -84,7 +97,10 @@ public class UserDAO {
 			conn = DriverManager
 					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
-					.prepareStatement("select userID,userName,userCategoryID,isAdmin from users where userName=?");
+					.prepareStatement("select users.userID as userID,userName,points.userCategoryID as userCategoryID,isAdmin " 
+									 +"from users,points "
+									 +"where users.userID=points.userID "
+									 +"AND userName=?");
 			pst.setString(1, userName);
 			rs = pst.executeQuery();
 			while (rs.next()) {
@@ -124,6 +140,11 @@ public class UserDAO {
 		return user;
 	}
 
+	/**
+	 * Function to retrieve a User's points
+	 * @param userID
+	 * @return
+	 */
 	public static int getUserPoints(int userID) {
 		boolean result = false;
 		int points = 0;
@@ -176,6 +197,13 @@ public class UserDAO {
 		return points;
 	}
 
+	/**
+	 *  Function to set a User's points and poinstRenewal date
+	 * @param userID
+	 * @param points
+	 * @param pointsRenewalDate
+	 * @return
+	 */
 	public static boolean setUserPoints(int userID, int points, Date pointsRenewalDate) {
 		boolean result = false;
 		Connection conn = null;
@@ -233,6 +261,11 @@ public class UserDAO {
 		return result;
 	}
 
+	/***
+	 * Function to retrieve a User's category
+	 * @param userID
+	 * @return
+	 */
 	public static Map<String, String> getUserCategory(int userID) {
 		boolean result = false;
 		int points = 0;
@@ -247,7 +280,11 @@ public class UserDAO {
 			conn = DriverManager
 					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
-					.prepareStatement("select users.userCategoryID as categoryID, categories.categoryName as categoryName,categories.categoryDiscount as categoryDiscount from users, categories where users.userCategoryID=categories.categoryID AND users.userID=?");
+					.prepareStatement("select points.userCategoryID as categoryID, categories.categoryName as categoryName,categories.categoryDiscount as categoryDiscount " 
+									  +"from users,categories,points " 
+									  +"where users.userID=points.userID "
+									  +"AND points.userCategoryID=categories.categoryID " 
+									  +"AND users.userID=?");
 			pst.setInt(1, userID);
 			rs = pst.executeQuery();
 			while (rs.next()) {
@@ -288,6 +325,12 @@ public class UserDAO {
 		return membershipMap;
 	}
 
+	/**
+	 * Function to set a User's category
+	 * @param userID
+	 * @param userCategoryID
+	 * @return
+	 */
 	public static int setUserCategory(int userID,int userCategoryID) {
 		Connection conn = null;
 		PreparedStatement pst = null;
@@ -297,7 +340,7 @@ public class UserDAO {
 			Class.forName(driver).newInstance();
 			conn = DriverManager
 					.getConnection(url + dbName, dbUserName, password);
-			pst = conn.prepareStatement("update users set userCategoryID=? where userID=?");
+			pst = conn.prepareStatement("update points set userCategoryID=? where userID=?");
 			pst.setInt(1, userCategoryID);
 			pst.setInt(2, userID);
 			
@@ -335,7 +378,12 @@ public class UserDAO {
 
 		return 0;
 	}
-
+	
+	/***
+	 * Function to get the points renewal date for a userID
+	 * @param userID
+	 * @return
+	 */
 	public static Date getPointsRenewalDate(int userID) {
 		Connection conn = null;
 		PreparedStatement pst = null;
@@ -386,7 +434,10 @@ public class UserDAO {
 		return pointsRenewalDate;
 	}
 	
-	
+	/**
+	 * Functions to retrieve the count of Users according to the category
+	 * @return
+	 */
 	public static Map<String,Integer> getUserCountCategoryWise() {
 		Connection conn = null;
 		PreparedStatement pst = null;
@@ -398,9 +449,10 @@ public class UserDAO {
 				conn = DriverManager
 						.getConnection(url + dbName, dbUserName, password);
 				pst = conn.prepareStatement("select count(users.userID) as count,categories.categoryName as categoryName "
-											+"from users, categories "
-											+"where users.userCategoryID=categories.categoryID "
-											+"group by users.userCategoryID");
+											+"from users, points, categories " 
+											+"where users.userID=points.userID "
+											+"AND points.userCategoryID=categories.categoryID " 
+											+"group by points.userCategoryID");
 				rs = pst.executeQuery();
 				while(rs.next()){
 					productList.put(rs.getString("categoryName"),rs.getInt("count"));
