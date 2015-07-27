@@ -44,6 +44,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
+		$("#userSuccess").hide();
+		$("#userError").hide();
+		
 		$('li').click(function(){
 			$('li').removeClass('active');
 			$(this).addClass('active');	
@@ -83,28 +86,27 @@
 			
 			$('#insertUserID').val(id);
 			$('#insertUsername').val(name);
-			$('#insertCatID').val(catID);
+			$('#insertUserCatID').val(catID);
 			$('#insertIsAdmin').val(isAdmin);
 			
 		});
 		
-		$('#catData table').on('click','tr',function(e){
+		$('#catData table').on('click','tr.clickable-row',function(e){
 			e.preventDefault();
 			
-			var catTrID=$(this).attr('id').split("_")[1];
-			var catID = $('#td_catID'+'_'+catTrID).html();
-			var name = $('#td_catName'+'_'+catTrID).html();
-			var catDisc = $('#td_catDiscount'+'_'+catTrID).html();
-			var mpr = $('#td_minPtsReq'+'_'+catTrID).html();
+			var cCatID = $(this).attr('id').split("_")[1];
+			var name = $('#td_catName'+'_'+cCatID).html();
+			var catDisc = $('#td_catDiscount'+'_'+cCatID).html();
+			var mpr = $('#td_minPtsReq'+'_'+cCatID).html();
 			
-			$('#insertCatID').val(catID);
+			$('#insertCatID').val(cCatID);
 			$('#insertCatName').val(name);
 			$('#insertCatDiscount').val(catDisc);
 			$('#insertMinPtsReq').val(mpr);
 			
 		});
 		
-		$('#prodData table').on('click', 'tr', function(e){
+		$('#prodData table').on('click', 'tr.clickable-row', function(e){
 			e.preventDefault();
 			
 			var prodTrID=$(this).attr('id').split("_")[1];
@@ -126,156 +128,196 @@
 			
 		});
 		
-		$('#pointData table').on('click','tr',function(e){
+		$('#pointData table').on('click','tr.clickable-row',function(e){
 			e.preventDefault();
 			
-			var pointTrID=$(this).attr('id').split("_")[1];
-			var pUserID = $('#td_pUserID'+'_'+pointTrID).html();
-			var nPts = $('#td_pPoints'+'_'+pointTrID).html();
-			var renewDate = $('#td_pRenewDate'+'_'+pointTrID).html();
+			var pUserID = $(this).attr('id').split("_")[1];
+			var nPts = $('#td_pPoints'+'_'+pUserID).html();
+			var renewDate = $('#td_pRenewDate'+'_'+pUserID).html();
 			
 			$('#insertPointID').val(pUserID);
 			$('#insertNumPoints').val(nPts);
 			$('#insertPtRenewDt').val(renewDate);
 		});
 	
-	$('#overviewData > div > ul.nav-stacked > li ').on('click','a#userLeftMenu',function(e){
-		$.ajax({
-			type : "get",
-			url : "http://localhost:8080/DBMS_Project5/AdminServlet?method=getUsersGraph", //this is my servlet
-			success : function(result) 
-			{
-				$('#pieChart1').html('');
-				var valueArray = [];
-				var temp=jQuery.parseJSON(result);
-				$.each(temp.userCountCategoryWiseList,function(key, value){
-					console.log(key+":"+value);
-					var valueObj={};
-					valueObj.label=key;
-					valueObj.value=value;
-					valueArray.push(valueObj);
-					
-				});
-				$('#chartHeader').html("Users Distribution (acording to Category):")
-				var pie = new d3pie("pieChart1", {
-					  size: {
-							"canvasHeight": 300,
-							"canvasWidth": 390,
-							"pieOuterRadius": "90%"
-						},
-					  labels: {
-					    inner: {
-					      format: "none"
-					    }
-					  },
-					  data: {
-					    content: valueArray
-					  },
-					  tooltips: {
-					    enabled: true,
-					    type: "placeholder",
-					    string: "{label}, {value}, {percentage}%"
-					  }
+		$('#overviewData > div > ul.nav-stacked > li ').on('click','a#userLeftMenu',function(e){
+			$.ajax({
+				type : "get",
+				url : "http://localhost:8080/DBMS_Project5/AdminServlet?method=getUsersGraph", //this is my servlet
+				success : function(result) 
+				{
+					$('#pieChart1').html('');
+					var valueArray = [];
+					var temp=jQuery.parseJSON(result);
+					$.each(temp.userCountCategoryWiseList,function(key, value){
+						console.log(key+":"+value);
+						var valueObj={};
+						valueObj.label=key;
+						valueObj.value=value;
+						valueArray.push(valueObj);
+						
 					});
+					$('#chartHeader').html("Users Distribution (acording to Category):")
+					var pie = new d3pie("pieChart1", {
+						  size: {
+								"canvasHeight": 300,
+								"canvasWidth": 390,
+								"pieOuterRadius": "90%"
+							},
+						  labels: {
+							inner: {
+							  format: "none"
+							}
+						  },
+						  data: {
+							content: valueArray
+						  },
+						  tooltips: {
+							enabled: true,
+							type: "placeholder",
+							string: "{label}, {value}, {percentage}%"
+						  }
+						});
 
-			}
-		});
-
-	});
-	
-
-	$('#overviewData > div > ul.nav-stacked > li ').on('click','a#productSalesLeftMenu',function(e){
-		$.ajax({
-		 	type : "get",
-			url : "http://localhost:8080/DBMS_Project5/AdminServlet?method=getProductsSalesGraph", //this is my servlet
-			success : function(result) 
-			{
-				$('#pieChart1').html('');
-				$('#chartHeader').html("No. of products sold (acording to Category):");
-				var valueArray = [];
-				var temp=jQuery.parseJSON(result);
-				var i=0;
-				$.each(temp.orderCountCategoryWise,function(key, value){
-					console.log(key+":"+value);
-					var valueObj={};
-					valueObj.label=key;
-					valueObj.value=value;
-					valueArray.push(valueObj);
-					
-					
-				});
-				var pie = new d3pie("pieChart1", {
-					  size: {
-							"canvasHeight": 300,
-							"canvasWidth": 390,
-							"pieOuterRadius": "90%"
-						},
-					  labels: {
-					    inner: {
-					      format: "none"
-					    }
-					  },
-					  data: {
-					    content: valueArray
-					  },
-					  tooltips: {
-					    enabled: true,
-					    type: "placeholder",
-					    string: "{label}, {value}, {percentage}%"
-					  }
-					});
-
-			}
+				}
+			});
 
 		});
+		
 
-	});
-	
-
-	$('#overviewData > div > ul.nav-stacked > li ').on('click','a#productLeftMenu',function(e){
-		$.ajax({
-			type : "get",
-			url : "http://localhost:8080/DBMS_Project5/AdminServlet?method=getProductsGraph", //this is my servlet
-			success : function(result) 
-			{
-				
-				var valueArray = [];
-				var temp=jQuery.parseJSON(result);
-				$.each(temp.productCountCategoryWiseList,function(key, value){
-					console.log(key+":"+value);
-					var valueObj={};
-					valueObj.label=key;
-					valueObj.value=value;
-					valueArray.push(valueObj);
-					
-				});
-				$('#pieChart1').html('');
-				$('#chartHeader').html("Products Distribution (acording to Category):")
-				var pie = new d3pie("pieChart1", {
-					  size: {
-							"canvasHeight": 300,
-							"canvasWidth": 390,
-							"pieOuterRadius": "90%"
-						},
-					  labels: {
-					    inner: {
-					      format: "none"
-					    }
-					  },
-					  data: {
-					    content: valueArray
-					  },
-					  tooltips: {
-					    enabled: true,
-					    type: "placeholder",
-					    string: "{label}, {value}, {percentage}%"
-					  }
+		$('#overviewData > div > ul.nav-stacked > li ').on('click','a#productSalesLeftMenu',function(e){
+			$.ajax({
+				type : "get",
+				url : "http://localhost:8080/DBMS_Project5/AdminServlet?method=getProductsSalesGraph", //this is my servlet
+				success : function(result) 
+				{
+					$('#pieChart1').html('');
+					$('#chartHeader').html("No. of products sold (acording to Category):");
+					var valueArray = [];
+					var temp=jQuery.parseJSON(result);
+					var i=0;
+					$.each(temp.orderCountCategoryWise,function(key, value){
+						console.log(key+":"+value);
+						var valueObj={};
+						valueObj.label=key;
+						valueObj.value=value;
+						valueArray.push(valueObj);
+						
+						
 					});
+					var pie = new d3pie("pieChart1", {
+						  size: {
+								"canvasHeight": 300,
+								"canvasWidth": 390,
+								"pieOuterRadius": "90%"
+							},
+						  labels: {
+							inner: {
+							  format: "none"
+							}
+						  },
+						  data: {
+							content: valueArray
+						  },
+						  tooltips: {
+							enabled: true,
+							type: "placeholder",
+							string: "{label}, {value}, {percentage}%"
+						  }
+						});
 
-			}
+				}
+
+			});
+
 		});
+		
 
-	});
+		$('#overviewData > div > ul.nav-stacked > li ').on('click','a#productLeftMenu',function(e){
+			$.ajax({
+				type : "get",
+				url : "http://localhost:8080/DBMS_Project5/AdminServlet?method=getProductsGraph", //this is my servlet
+				success : function(result) 
+				{
+					
+					var valueArray = [];
+					var temp=jQuery.parseJSON(result);
+					$.each(temp.productCountCategoryWiseList,function(key, value){
+						console.log(key+":"+value);
+						var valueObj={};
+						valueObj.label=key;
+						valueObj.value=value;
+						valueArray.push(valueObj);
+						
+					});
+					$('#pieChart1').html('');
+					$('#chartHeader').html("Products Distribution (acording to Category):")
+					var pie = new d3pie("pieChart1", {
+						  size: {
+								"canvasHeight": 300,
+								"canvasWidth": 390,
+								"pieOuterRadius": "90%"
+							},
+						  labels: {
+							inner: {
+							  format: "none"
+							}
+						  },
+						  data: {
+							content: valueArray
+						  },
+						  tooltips: {
+							enabled: true,
+							type: "placeholder",
+							string: "{label}, {value}, {percentage}%"
+						  }
+						});
+
+				}
+			});
+
+		});
+		
+		$("#userModal > div.modal-dialog > div.modal-content > div.modal-footer").on('click','#userSubmit',function() {
+
+					var uID = $('#insertUserID').val();
+					var uName = $('#insertUsername').val();
+					var uCID = $('#insertUserCatID').val();
+					var uIsAdmin = $('#insertIsAdmin').val();
+					var dataToSend = new Object();
+					
+					dataToSend.uID = uID;
+					dataToSend.uName = uName;
+					dataToSend.uCID = uCID;
+					dataToSend.uIsAdmin = uIsAdmin;
+					
+					$.ajax(
+					{
+						
+						type : "post",
+						url : "http://localhost:8080/DBMS_Project5/AdminServlet", //this is my servlet
+						
+						data : 
+						{
+							method: "editUser",
+							user : JSON.stringify(dataToSend)
+							
+						},
+						
+						success : function(result) {
+							if(result.hasOwnProperty('success')){
+									$('#userModal').modal('hide');
+									$('#userSuccessText').html(result['success']);
+									$('#userSuccess').slideDown();
+									}
+							else {
+								$('#userModal').modal('hide');
+								$('#userErrorText').html(result);
+								$('#userError').slideDown();
+							}
+						}
+					});
+				});
 	
 	});
 	
@@ -284,10 +326,6 @@
 </head>
 
 <body>
-
-	<!-- <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
-     url="jdbc:mysql://localhost/rewardsite"
-     user="root"  password=""/> -->
 
 	<div class="container">
 
@@ -340,23 +378,6 @@
 							<li id='categoryView'><a href="#">Category Options</a></li>
 							<li id='productView'><a href="#">Product Options</a></li>
 							<li id='pointView'><a href="#">Points Options</a></li>
-
-
-							<!--
-					<li class="dropdown">
-					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">User Options<span class="caret"></span></a>
-					  <ul class="dropdown-menu" role="menu">
-						<li><a href="#">Display Users</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Change User Category</a></li>
-						<li><a href="#">Something else here</a></li>
-						<li class="divider"></li>
-						<li><a href="#">Separated link</a></li>
-						<li class="divider"></li>
-						<li><a href="#">One more separated link</a></li>
-					  </ul>
-					</li>
-					-->
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -404,6 +425,14 @@
 		</div>
 
 		<div class='container-fluid' id='userData' style='display: none;'>
+			<div class="alert alert-dismissible alert-success" id='userSuccess'>
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				<div id="userSuccessText"></div>
+			</div>
+			<div class="alert alert-dismissible alert-danger" id='userError'>
+				<button type="button" class="close" data-dismiss="alert">×</button>
+				<div id="userErrorTest"></div>
+			</div>
 			<h3>Users</h3>
 			<!-- Show users -->
 			<hr />
@@ -448,11 +477,11 @@
 				<tbody>
 					<c:forEach items="${categoryList}" var="article">
 						<tr class='clickable-row' data-toggle="modal"
-							data-target='#catModal'>
-							<td id='td_catID'>${article.categoryID}</td>
-							<td id='td_catName'>${article.categoryName}</td>
-							<td id='td_catDiscount'>${article.categoryDiscount}%</td>
-							<td id='td_minPtsReq'>${article.minPointsRequired}points</td>
+							data-target='#catModal' id="tr_${article.categoryID}">
+							<td id='td_catID_${article.categoryID}'>${article.categoryID}</td>
+							<td id='td_catName_${article.categoryID}'>${article.categoryName}</td>
+							<td id='td_catDiscount_${article.categoryID}'>${article.categoryDiscount}%</td>
+							<td id='td_minPtsReq_${article.categoryID}'>${article.minPointsRequired}points</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -479,14 +508,14 @@
 				<tbody>
 					<c:forEach items="${productsList}" var="article">
 						<tr class='clickable-row' data-toggle="modal"
-							data-target='#prodModal'>
-							<td id='td_prodID'>${article.productID}</td>
-							<td id='td_prodAmt'>$${article.productPrice}</td>
-							<td id='td_prodImg'>${article.productImage}</td>
-							<td id='td_prodName'>${article.productName}</td>
-							<td id='td_prodDesc'>${article.productDescription}</td>
-							<td id='td_prodPts'>${article.productPoints}</td>
-							<td id='td_prodCatID'>${article.productCategoryID}</td>
+							data-target='#prodModal' id="tr_${article.productID}">
+							<td id='td_prodID_${article.productID}'>${article.productID}</td>
+							<td id='td_prodAmt_${article.productID}'>$${article.productPrice}</td>
+							<td id='td_prodImg_${article.productID}'>${article.productImage}</td>
+							<td id='td_prodName_${article.productID}'>${article.productName}</td>
+							<td id='td_prodDesc_${article.productID}'>${article.productDescription}</td>
+							<td id='td_prodPts_${article.productID}'>${article.productPoints}</td>
+							<td id='td_prodCatID_${article.productID}'>${article.productCategoryID}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -494,7 +523,7 @@
 		</div>
 
 		<div class='container-fluid' id='pointData' style='display: none;'>
-			<h3>Products</h3>
+			<h3>Points</h3>
 			<!-- Show users -->
 			<hr />
 			<table class="table table-striped table-hover">
@@ -509,10 +538,10 @@
 				<tbody>
 					<c:forEach items="${pointsList}" var="article">
 						<tr class='clickable-row' data-toggle="modal"
-							data-target='#pointModal' id="pointTr">
-							<td id='td_pUserID'>${article.userID}</td>
-							<td id='td_pPoints'>${article.points}</td>
-							<td id='td_pRenewDate'>${article.pointsRenewalDate}</td>
+							data-target='#pointModal' id="tr_${article.userID}">
+							<td id='td_pUserID_${article.userID}"'>${article.userID}</td>
+							<td id='td_pPoints_${article.userID}"'>${article.points}</td>
+							<td id='td_pRenewDate_${article.userID}"'>${article.pointsRenewalDate}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -531,22 +560,23 @@
 						<h4 class="modal-title" id="mLabel">Edit User Data</h4>
 					</div>
 					<div class="modal-body">
-
-						<label for='#insertUserID'>User ID</label> <input type='text'
-							id='insertUserID' class="form-control" placeholder='User ID'
-							value='' disabled> <br /> <label for='#insertUsername'>Username</label>
-						<input type='text' id='insertUsername' class="form-control"
-							placeholder='username'> <br /> <label for='#insertCatID'>Cat
-							ID</label> <input type='text' id='insertCatID' class="form-control"
-							placeholder='CatID'> <br /> <label for='#insertisAdmin'>Admin
-							Status</label> <input type='text' id='insertIsAdmin' class="form-control"
-							placeholder='Admin Status'>
+						<form class="form-horizontal" action="AdminServlet" method="post">
+							<label for='#insertUserID'>User ID</label> <input type='text'
+								id='insertUserID' class="form-control" placeholder='User ID'
+								value='' disabled> <br /> <label for='#insertUsername'>Username</label>
+							<input type='text' id='insertUsername' class="form-control"
+								placeholder='username'> <br /> <label for='#insertUserCatID'>Cat
+								ID</label> <input type='text' id='insertUserCatID' class="form-control"
+								placeholder='CatID'> <br /> <label for='#insertisAdmin'>Admin
+								Status</label> <input type='text' id='insertIsAdmin' class="form-control"
+								placeholder='Admin Status'>
+						</form>
 
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default "
 							data-dismiss="modal" id="userModalClose">Close</button>
-						<button type="button" class="btn btn-primary">Ok</button>
+						<button type="button" id='userSubmit' class="btn btn-primary">Ok</button>
 					</div>
 				</div>
 			</div>
