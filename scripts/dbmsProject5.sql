@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 27, 2015 at 04:44 AM
+-- Generation Time: Jul 27, 2015 at 07:30 AM
 -- Server version: 5.6.25
 -- PHP Version: 5.5.20
 
@@ -55,14 +55,17 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `orderAmount` double NOT NULL DEFAULT '0',
   `orderedOn` datetime NOT NULL,
   `productID` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
 INSERT INTO `orders` (`userID`, `orderID`, `orderAmount`, `orderedOn`, `productID`) VALUES
-(3, 1, 56, '2015-07-27 00:00:00', 1);
+(3, 1, 56, '2015-07-27 00:00:00', 1),
+(6, 2, 70, '2015-07-27 00:00:00', 6),
+(5, 3, 70, '2015-07-27 00:00:00', 4),
+(2, 4, 52.5, '2015-07-27 00:00:00', 2);
 
 -- --------------------------------------------------------
 
@@ -83,11 +86,11 @@ CREATE TABLE IF NOT EXISTS `points` (
 
 INSERT INTO `points` (`userID`, `points`, `pointsRenewalDate`, `userCategoryID`) VALUES
 (1, 0, '2015-07-22 12:00:00', 0),
-(2, 100, '2015-07-28 00:00:00', 3),
+(2, 130, '2015-07-28 00:00:00', 3),
 (3, 75, '2015-07-28 00:00:00', 2),
 (4, 0, '2015-07-25 00:00:00', 3),
-(5, 0, '2015-07-22 12:00:00', 0),
-(6, 0, '2015-07-22 12:00:00', 0);
+(5, 0, '2015-07-27 00:00:00', 0),
+(6, 0, '2015-07-27 00:00:00', 2);
 
 -- --------------------------------------------------------
 
@@ -191,7 +194,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `users`
 --

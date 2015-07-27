@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.sql.Date;
 import java.util.List;
 
@@ -162,5 +164,61 @@ public class OrderDAO {
 		return result;
 		
 	}
+	
+	/**
+	 * Functions to retrieve the count of Users according to the category
+	 * @return
+	 */
+	public static Map<String,Integer> getOrderCountCategoryWise() {
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		Map<String,Integer> orderList = new HashMap<String,Integer>();
+		
+		try {
+				Class.forName(driver).newInstance();
+				conn = DriverManager
+						.getConnection(url + dbName, userName, password);
+				pst = conn.prepareStatement("select categories.categoryName, count(products.productID) as count "
+											+"from products "
+											+"INNER JOIN orders on products.productID=orders.productID "
+											+"RIGHT OUTER JOIN categories ON categories.categoryID=products.productCategoryID "
+											+"WHERE categories.categoryID!=0 "
+											+"GROUP BY categories.categoryID");
+				rs = pst.executeQuery();
+				while(rs.next()){
+					orderList.put(rs.getString("categoryName"),rs.getInt("count"));
+				}
+			} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			
+			if (conn != null) {
+				try {
+					conn.close();
+				
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pst != null) {
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return orderList;  
+	}
+
 
 }
