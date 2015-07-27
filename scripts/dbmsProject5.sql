@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 22, 2015 at 08:01 AM
+-- Generation Time: Jul 27, 2015 at 04:19 AM
 -- Server version: 5.6.25
 -- PHP Version: 5.5.20
 
@@ -61,7 +61,9 @@ CREATE TABLE IF NOT EXISTS `orderDetails` (
 --
 
 INSERT INTO `orderDetails` (`orderNumber`, `productID`, `productSoldAt`, `createdOn`) VALUES
-(1, 3, 70, '2015-07-22 00:00:00');
+(1, 3, 70, '2015-07-22 00:00:00'),
+(2, 1, 70, '2015-07-25 00:00:00'),
+(3, 1, 56, '2015-07-27 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -81,7 +83,9 @@ CREATE TABLE IF NOT EXISTS `orders` (
 --
 
 INSERT INTO `orders` (`userID`, `orderID`, `totalOrderPrice`, `orderedOn`) VALUES
-(4, 1, 70, '2015-07-22 00:00:00');
+(4, 1, 70, '2015-07-22 10:07:55'),
+(4, 2, 70, '2015-07-25 00:00:00'),
+(3, 3, 56, '2015-07-27 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -92,20 +96,21 @@ INSERT INTO `orders` (`userID`, `orderID`, `totalOrderPrice`, `orderedOn`) VALUE
 CREATE TABLE IF NOT EXISTS `points` (
   `userID` int(11) NOT NULL,
   `points` int(11) NOT NULL,
-  `pointsRenewalDate` datetime NOT NULL
+  `pointsRenewalDate` datetime NOT NULL,
+  `userCategoryID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `points`
 --
 
-INSERT INTO `points` (`userID`, `points`, `pointsRenewalDate`) VALUES
-(1, 0, '2015-07-22 12:00:00'),
-(2, 100, '2015-07-28 00:00:00'),
-(3, 55, '2015-07-28 00:00:00'),
-(4, 60, '2015-07-22 12:00:00'),
-(5, 0, '2015-07-22 12:00:00'),
-(6, 0, '2015-07-22 12:00:00');
+INSERT INTO `points` (`userID`, `points`, `pointsRenewalDate`, `userCategoryID`) VALUES
+(1, 0, '2015-07-22 12:00:00', 0),
+(2, 100, '2015-07-28 00:00:00', 3),
+(3, 65, '2015-07-28 00:00:00', 2),
+(4, 0, '2015-07-25 00:00:00', 3),
+(5, 0, '2015-07-22 12:00:00', 0),
+(6, 0, '2015-07-22 12:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -145,22 +150,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `userID` int(11) NOT NULL,
   `userName` varchar(255) NOT NULL,
   `userPassword` varchar(255) NOT NULL,
-  `userCategoryID` int(11) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL,
   `createdOn` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`userID`, `userName`, `userPassword`, `userCategoryID`, `isAdmin`, `createdOn`) VALUES
-(1, 'admin', 'password', 0, 1, '2015-07-22 12:00:00'),
-(2, 'phillip', 'passmc', 3, 0, '2015-07-22 12:00:00'),
-(3, 'narita', 'passpa', 2, 0, '2015-07-22 12:00:00'),
-(4, 'jey', 'passjo', 0, 0, '2015-07-22 12:00:00'),
-(5, 'justin', 'passtu', 0, 0, '2015-07-22 12:00:00'),
-(6, 'ryan', 'passpe', 0, 0, '2015-07-22 12:00:00');
+INSERT INTO `users` (`userID`, `userName`, `userPassword`, `isAdmin`, `createdOn`) VALUES
+(1, 'admin@uga.edu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 1, '2015-07-22 12:00:00'),
+(2, 'phillip@uga.edu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 0, '2015-07-22 12:00:00'),
+(3, 'narita@uga.edu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 0, '2015-07-22 12:00:00'),
+(4, 'jey@uga.edu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 0, '2015-07-22 12:00:00'),
+(5, 'justin@uga.edu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 0, '2015-07-22 12:00:00'),
+(6, 'ryan@uga.edu', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 0, '2015-07-22 12:00:00');
 
 --
 -- Indexes for dumped tables
@@ -183,7 +187,8 @@ ALTER TABLE `orders`
 -- Indexes for table `points`
 --
 ALTER TABLE `points`
-  ADD PRIMARY KEY (`userID`);
+  ADD PRIMARY KEY (`userID`),
+  ADD KEY `userCategoryID` (`userCategoryID`);
 
 --
 -- Indexes for table `products`
@@ -198,8 +203,7 @@ ALTER TABLE `products`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`userID`),
   ADD UNIQUE KEY `userName` (`userName`),
-  ADD UNIQUE KEY `userName_2` (`userName`),
-  ADD KEY `userCategoryID` (`userCategoryID`);
+  ADD UNIQUE KEY `userName_2` (`userName`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -209,7 +213,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `userID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- Constraints for dumped tables
 --
@@ -224,7 +228,8 @@ ALTER TABLE `orders`
 -- Constraints for table `points`
 --
 ALTER TABLE `points`
-  ADD CONSTRAINT `points_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
+  ADD CONSTRAINT `points_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
+  ADD CONSTRAINT `points_ibfk_2` FOREIGN KEY (`userCategoryID`) REFERENCES `categories` (`categoryID`);
 
 --
 -- Constraints for table `products`
@@ -232,19 +237,6 @@ ALTER TABLE `points`
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`productCategoryID`) REFERENCES `categories` (`categoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`userCategoryID`) REFERENCES `categories` (`categoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 1; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 2; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 3; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 4; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 5; UPDATE `dbmsProject5`.`users` SET `userPassword` = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8' WHERE `users`.`userID` = 6; 
-
-
-UPDATE `dbmsProject5`.`users` SET `userName` = 'admin@uga.edu' WHERE `users`.`userID` = 1; UPDATE `dbmsProject5`.`users` SET `userName` = 'phillip@uga.edu' WHERE `users`.`userID` = 2; UPDATE `dbmsProject5`.`users` SET `userName` = 'narita@uga.edu' WHERE `users`.`userID` = 3; UPDATE `dbmsProject5`.`users` SET `userName` = 'jey@uga.edu' WHERE `users`.`userID` = 4; UPDATE `dbmsProject5`.`users` SET `userName` = 'justin@uga.edu' WHERE `users`.`userID` = 5; UPDATE `dbmsProject5`.`users` SET `userName` = 'ryan@uga.edu' WHERE `users`.`userID` = 6;
-
