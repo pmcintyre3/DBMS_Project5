@@ -14,7 +14,7 @@ public class PointsDAO {
     static String url = "jdbc:mysql://localhost:3306/";
     static String dbName = "dbmsProject5";
     static String driver = "com.mysql.jdbc.Driver";
-    static String userName = "root";
+    static String dbUserName = "root";
     static String password = "root";
 
     /**
@@ -31,7 +31,7 @@ public class PointsDAO {
         try {
             Class.forName(driver).newInstance();
             conn = DriverManager
-                    .getConnection(url + dbName, userName, password);
+                    .getConnection(url + dbName, dbUserName, password);
             pst = conn.prepareStatement("select userID, points, pointsRenewalDate from points");
             rs = pst.executeQuery();
             while(rs.next()){
@@ -81,12 +81,13 @@ public class PointsDAO {
             rs = -1;
             Class.forName(driver).newInstance();
             conn = DriverManager
-                    .getConnection(url + dbName, userName, password);
+                    .getConnection(url + dbName, dbUserName, password);
             pst = conn
-                    .prepareStatement("INSERT INTO points (userID, points, userCategoryID, pointsRenewalDate) VALUES (?,?,?);");
+                    .prepareStatement("INSERT INTO points (userID, points, userCategoryID, pointsRenewalDate) VALUES (?,?,?,?);");
             pst.setInt(1, uID);
             pst.setInt(2, 0);
-            pst.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            pst.setInt(3, 0);
+            pst.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
 
             rs = pst.executeUpdate();
             pst.clearParameters();

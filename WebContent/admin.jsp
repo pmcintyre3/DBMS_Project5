@@ -296,7 +296,7 @@
 		<div class="masthead">
 			<div class="row">
 				<div class="col-md-10">
-					<a href="AdminServlet"><img src="bootstrap/images/logo.png"
+					<a href="#"><img src="bootstrap/images/logo.png"
 						alt=""></a> <br />
 				</div>
 			</div>
@@ -327,7 +327,7 @@
 								class="icon-bar"></span> <span class="icon-bar"></span> <span
 								class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="admin.jsp" disabled>Adidas
+						<a class="navbar-brand" href="#" disabled>Adidas
 							Rewards</a>
 					</div>
 

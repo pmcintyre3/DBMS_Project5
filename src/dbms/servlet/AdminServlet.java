@@ -100,16 +100,81 @@ public class AdminServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+						  HttpServletResponse response) throws ServletException, IOException {
+		try {
 
-		request.setAttribute("userList", UserDAO.getAllUsers());
-		request.setAttribute("categoryList", CategoriesDAO.getAllCategories());
-		request.setAttribute("productsList", ProductDao.getAllProducts());
-		request.setAttribute("pointsList", PointsDAO.getAllPoints());
-		// request.setAttribute("productList",ProductDao.getAllProducts(0));
-		RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
-		rd.forward(request, response);
+			PrintWriter out;
 
+			if (request.getParameter("method") != null) {
+				String method = request.getParameter("method");
+
+
+
+				if (method.equals("editUser")) {
+
+					JSONObject jObj = new JSONObject(request.getParameter("user"));
+					int result = editUser(jObj);
+
+					System.out.println("editUser");
+
+					if (result > 0) {
+						out = response.getWriter();
+						JSONObject resObj = new JSONObject();
+						try {
+							resObj.put("success", "User successfully updated!");
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						out.println(resObj.toString());
+						out.close();
+					} else {
+
+						out = response.getWriter();
+						JSONObject resObj = new JSONObject();
+						try {
+							resObj.put("error", "Something went wrong!");
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						out.println(resObj.toString());
+						out.close();
+
+					}
+				}
+//
+			} else {
+				request.setAttribute("userList", UserDAO.getAllUsers());
+				request.setAttribute("categoryList", CategoriesDAO.getAllCategories());
+				request.setAttribute("productsList", ProductDao.getAllProducts());
+				request.setAttribute("pointsList", PointsDAO.getAllPoints());
+				//request.setAttribute("productList",ProductDao.getAllProducts(0));
+				RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
+				rd.forward(request, response);
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	private int editUser(JSONObject jObject) {
+
+		int result = -1;
+
+		try {
+			int uID = jObject.getInt("uID");
+			String uName = jObject.getString("uName");
+			int uCatID = jObject.getInt("uCID");
+			boolean isAdmin = jObject.getBoolean("uIsAdmin");
+
+			result = UserDAO.setUserData(uName, uCatID, isAdmin, uID);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 
 }

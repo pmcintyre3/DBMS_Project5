@@ -56,8 +56,9 @@ public class RegisterServlet extends HttpServlet {
             String password = request.getParameter("password");
 
             if ((result = RegisterDAO.registerUser(userName, password)) > 0) {
+                int u = UserDAO.getRecentRegisteredUserID(userName);
 
-                if((update = PointsDAO.registerUserPoints(Integer.parseInt(session.getAttribute("userID").toString()))) > 0)
+                if((update = PointsDAO.registerUserPoints(u)) > 0)
                 {
 
                     request.setAttribute("loginSuccess", "Registration Success! Log in with your new account!");
