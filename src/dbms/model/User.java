@@ -5,13 +5,13 @@ import java.sql.Date;
 public class User {
 	
 
-	private String userID;
+	private int userID;
 	private String userName;
 	private int userCategoryID;
 	private boolean isAdmin;
 
 	
-	public User(String userID,String userName,int userCategoryID,boolean isAdmin){
+	public User(int userID,String userName,int userCategoryID,boolean isAdmin){
 		
 		this.userID=userID;
 		this.userName=userName;
@@ -19,11 +19,11 @@ public class User {
 		this.isAdmin=isAdmin;
    }
 	
-	public String getUserID() {
+	public int getUserID() {
 		return userID;
 	}
  
-	public void setUserID(String userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 	public String getUserName() {

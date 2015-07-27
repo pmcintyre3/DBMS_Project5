@@ -63,10 +63,12 @@
 					var redeemPoints=($('.redeemPointsChkBox').is(':checked'))?true:false;
 					dataToSend.productID = productID;
 					dataToSend.redeemPoints=redeemPoints;
-					$.ajax({
+					$.ajax(
+					{
 						type : "post",
 						url : "http://localhost:8080/DBMS_Project5/ProductServlet", //this is my servlet
-						data : {
+						data : 
+						{
 							product : JSON.stringify(dataToSend)
 						},
 						success : function(result) {
@@ -77,8 +79,8 @@
 									$('#' + elementID).hide();
 
 									}
-									});
-						});
+					});
+				});
 
 });
 </script>

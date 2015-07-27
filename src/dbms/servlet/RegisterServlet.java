@@ -15,7 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dbms.dao.PointsDAO;
+import dbms.model.User;
+
 import dbms.dao.RegisterDAO;
+import dbms.dao.UserDAO;
 
 /**
  * Created by Phillip on 7/25/2015.
@@ -41,50 +45,28 @@ public class RegisterServlet extends HttpServlet {
 
         try {
             int result = -1;
+            int update = -1;
             response.setContentType("text/html");
             PrintWriter out = response.getWriter();
 
-            //HttpSession session = request.getSession();
+            HttpSession session = request.getSession();
 
             // Get request parameters for userID and password
             String userName = request.getParameter("userName");
             String password = request.getParameter("password");
 
-            result = RegisterDAO.registerUser(userName, password);
+            if ((result = RegisterDAO.registerUser(userName, password)) > 0) {
 
-            if (result > 0) {
+                if((update = PointsDAO.registerUserPoints(Integer.parseInt(session.getAttribute("userID").toString()))) > 0)
+                {
 
-//                // Set session parameters
-//                session = request.getSession(true);
-//                session.setAttribute("user", userName);
-//                session.setAttribute("userID", result);
-//
-//                // Setting session to expiry in 30 mins
-//                session.setMaxInactiveInterval(30 * 60);
-//                Cookie cookieUserName = new Cookie("user", userName);
-//                cookieUserName.setMaxAge(30 * 60);
-//                response.addCookie(cookieUserName);
-
-//                // Send the successful response
-//                //response.sendRedirect("loginSuccess.jsp");
-//                //
-//
-//                // Get all discounted products
-//                request.setAttribute("discountedProductList",this.getAllDiscoutedProducts(result));
-//
-//                //Get non-discounted products
-//                request.setAttribute("nonDiscountedProductList",this.getAllNonDiscoutedProducts(result));
-//
-//                //Get the user membership
-//                Map<String, String> userCategory=UserDAO.getUserCategory(result);
-//                request.setAttribute("userCategoryID",Integer.parseInt(userCategory.get("categoryID")));
-
-                request.setAttribute("loginSuccess","Registration Success! Log in with your new account!");
-                RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
-                rd.forward(request, response);
+                    request.setAttribute("loginSuccess", "Registration Success! Log in with your new account!");
+                    RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+                    rd.forward(request, response);
+                }
 
             } else {
-                request.setAttribute("error","Invalid Username or Password. Result = " + result);
+                request.setAttribute("error","Invalid Username or Password.");
                 RequestDispatcher rd = request
                         .getRequestDispatcher("/register.jsp");
                 rd.include(request, response);
