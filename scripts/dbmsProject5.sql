@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 27, 2015 at 04:19 AM
+-- Generation Time: Jul 27, 2015 at 04:44 AM
 -- Server version: 5.6.25
 -- PHP Version: 5.5.20
 
@@ -46,46 +46,23 @@ INSERT INTO `categories` (`categoryID`, `categoryName`, `categoryDiscount`, `min
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orderDetails`
---
-
-CREATE TABLE IF NOT EXISTS `orderDetails` (
-  `orderNumber` int(11) NOT NULL,
-  `productID` int(11) NOT NULL,
-  `productSoldAt` double NOT NULL,
-  `createdOn` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `orderDetails`
---
-
-INSERT INTO `orderDetails` (`orderNumber`, `productID`, `productSoldAt`, `createdOn`) VALUES
-(1, 3, 70, '2015-07-22 00:00:00'),
-(2, 1, 70, '2015-07-25 00:00:00'),
-(3, 1, 56, '2015-07-27 00:00:00');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `orders`
 --
 
 CREATE TABLE IF NOT EXISTS `orders` (
   `userID` int(11) NOT NULL,
   `orderID` int(11) NOT NULL,
-  `totalOrderPrice` double NOT NULL DEFAULT '0',
-  `orderedOn` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `orderAmount` double NOT NULL DEFAULT '0',
+  `orderedOn` datetime NOT NULL,
+  `productID` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`userID`, `orderID`, `totalOrderPrice`, `orderedOn`) VALUES
-(4, 1, 70, '2015-07-22 10:07:55'),
-(4, 2, 70, '2015-07-25 00:00:00'),
-(3, 3, 56, '2015-07-27 00:00:00');
+INSERT INTO `orders` (`userID`, `orderID`, `orderAmount`, `orderedOn`, `productID`) VALUES
+(3, 1, 56, '2015-07-27 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -107,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `points` (
 INSERT INTO `points` (`userID`, `points`, `pointsRenewalDate`, `userCategoryID`) VALUES
 (1, 0, '2015-07-22 12:00:00', 0),
 (2, 100, '2015-07-28 00:00:00', 3),
-(3, 65, '2015-07-28 00:00:00', 2),
+(3, 75, '2015-07-28 00:00:00', 2),
 (4, 0, '2015-07-25 00:00:00', 3),
 (5, 0, '2015-07-22 12:00:00', 0),
 (6, 0, '2015-07-22 12:00:00', 0);
@@ -181,7 +158,8 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`orderID`),
-  ADD KEY `userID` (`userID`);
+  ADD KEY `userID` (`userID`),
+  ADD KEY `productID` (`productID`);
 
 --
 -- Indexes for table `points`
@@ -210,6 +188,11 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -222,7 +205,8 @@ ALTER TABLE `users`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`productID`) REFERENCES `products` (`productID`);
 
 --
 -- Constraints for table `points`

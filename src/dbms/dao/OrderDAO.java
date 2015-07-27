@@ -42,11 +42,13 @@ public class OrderDAO {
 			conn = DriverManager.getConnection(url + dbName, userName, password);
 			
 			String selectTableSQL = "select orders.orderID,products.productID as productID, products.productName as productName, products.productDescription as productDescription, "
-									+"products.productImage as productImage,products.productPrice as productPrice,products.productCategoryID as productCategoryID, products.productPoints as productPoints, "
-									+"categories.categoryName as categoryName,orders.orderedOn as orderedOn, orderDetails.productSoldAt as discountedPrice " 
-									+"from users, products,orders,orderDetails,categories where " 
-									+" users.userID=orders.userID AND orders.orderID=orderDetails.orderNumber "
-									+"AND products.productID=orderDetails.productID AND categories.categoryID=products.productCategoryID AND users.userID=?";
+									+"products.productImage as productImage,products.productPrice as productPrice,products.productCategoryID as productCategoryID, products.productPoints as productPoints, " 
+									+"categories.categoryName as categoryName,orders.orderedOn as orderedOn, orders.orderAmount as discountedPrice " 
+									+"from users, products,orders,categories " 
+									+"where users.userID=orders.userID " 
+									+"AND products.productID=orders.productID " 
+									+"AND categories.categoryID=products.productCategoryID " 
+									+"AND users.userID=?";
 					
 									
 			pst = conn.prepareStatement(selectTableSQL);
@@ -104,20 +106,20 @@ public class OrderDAO {
 			Class.forName(driver).newInstance();
 			conn = DriverManager.getConnection(url + dbName, userName, password);
 			
-			
-			
-			// Determine the orderID
-			String selectTableSQL = "select MAX(orderID) from orders";
-			pst = conn.prepareStatement(selectTableSQL);
-			rs = pst.executeQuery();
-			while(rs.next()){
-				maxOrder=rs.getInt(1);
-				if(maxOrder==0){
-					maxOrderID=1;
-				}else{
-					maxOrderID=maxOrder+1;
-				}
-			}
+//			
+//			
+//			// Determine the orderID
+//			String selectTableSQL = "select MAX(orderID) from orders";
+//			pst = conn.prepareStatement(selectTableSQL);
+//			rs = pst.executeQuery();
+//			while(rs.next()){
+//				maxOrder=rs.getInt(1);
+//				if(maxOrder==0){
+//					maxOrderID=1;
+//				}else{
+//					maxOrderID=maxOrder+1;
+//				}
+//			}
 
 			
 			/**
@@ -127,28 +129,28 @@ public class OrderDAO {
 			 * we can straightaway insert the totalOrderPrice.
 			 */
 			
-			String insertTableSQL = "insert into orders (orderID,userID,totalOrderPrice,orderedOn)"
+			String insertTableSQL = "insert into orders (userID,productID,orderAmount,orderedOn)"
 									+" values (?,?,?,?)";
 			pst = conn.prepareStatement(insertTableSQL);
-			pst.setInt(1, maxOrderID);
-			pst.setInt(2, userID);
+			pst.setInt(1, userID);
+			pst.setInt(2, productID);
 			pst.setDouble(3, totalOrderPrice);
 			pst.setDate(4, orderedOn);
 		
 			if(pst.executeUpdate()>0){
-				/**
-				 * After insert into orders tables, 
-				 * make entries into orderDetails table too.
-				 * 
-				 */
-				insertTableSQL = "insert into orderDetails (orderNumber, productID, productSoldAt,createdOn)"
-						+" values (?,?,?,?)";
-				pst = conn.prepareStatement(insertTableSQL);
-				pst.setInt(1, maxOrderID);
-				pst.setInt(2, productID);
-				pst.setDouble(3, totalOrderPrice);
-				pst.setDate(4, orderedOn);
-				if(pst.executeUpdate()>0)
+//				/**
+//				 * After insert into orders tables, 
+//				 * make entries into orderDetails table too.
+//				 * 
+//				 */
+//				insertTableSQL = "insert into orderDetails (orderNumber, productID, productSoldAt,createdOn)"
+//						+" values (?,?,?,?)";
+//				pst = conn.prepareStatement(insertTableSQL);
+//				pst.setInt(1, maxOrderID);
+//				pst.setInt(2, productID);
+//				pst.setDouble(3, totalOrderPrice);
+//				pst.setDate(4, orderedOn);
+//				if(pst.executeUpdate()>0)
 					result=true;
 
 			}	
