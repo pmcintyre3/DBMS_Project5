@@ -150,7 +150,7 @@
 					var valueArray = [];
 					var temp=jQuery.parseJSON(result);
 					$.each(temp.userCountCategoryWiseList,function(key, value){
-						console.log(key+":"+value);
+						//console.log(key+":"+value);
 						var valueObj={};
 						valueObj.label=key;
 						valueObj.value=value;
@@ -197,7 +197,7 @@
 					var temp=jQuery.parseJSON(result);
 					var i=0;
 					$.each(temp.orderCountCategoryWise,function(key, value){
-						console.log(key+":"+value);
+						//console.log(key+":"+value);
 						var valueObj={};
 						valueObj.label=key;
 						valueObj.value=value;
@@ -243,7 +243,7 @@
 					var valueArray = [];
 					var temp=jQuery.parseJSON(result);
 					$.each(temp.productCountCategoryWiseList,function(key, value){
-						console.log(key+":"+value);
+						//console.log(key+":"+value);
 						var valueObj={};
 						valueObj.label=key;
 						valueObj.value=value;
@@ -305,15 +305,22 @@
 						},
 						
 						success : function(result) {
-							if(result.hasOwnProperty('success')){
+							var obj = jQuery.parseJSON(result);
+							if(obj.success){
 									$('#userModal').modal('hide');
-									$('#userSuccessText').html(result['success']);
 									$('#userSuccess').slideDown();
-									}
-							else {
+									$('#userSuccessText').html(obj.success);
+									
+									$('#td_userID_'+dataToSend.uID).html(dataToSend.uID);
+									$('#td_userName_'+dataToSend.uID).html(dataToSend.uName);
+									$('#td_userCatID_'+dataToSend.uID).html(dataToSend.uCID);
+									$('#td_userIsAdmin_'+dataToSend.uID).html(dataToSend.uIsAdmin);
+									 
+									
+							}else {
 								$('#userModal').modal('hide');
-								$('#userErrorText').html(result);
 								$('#userError').slideDown();
+								$('#userErrorText').html(obj.error);
 							}
 						}
 					});
@@ -425,11 +432,11 @@
 		</div>
 
 		<div class='container-fluid' id='userData' style='display: none;'>
-			<div class="alert alert-dismissible alert-success" id='userSuccess'>
+			<div class="alert alert-dismissible alert-success" id='userSuccess' style='display: none;'>
 				<button type="button" class="close" data-dismiss="alert">×</button>
 				<div id="userSuccessText"></div>
 			</div>
-			<div class="alert alert-dismissible alert-danger" id='userError'>
+			<div class="alert alert-dismissible alert-danger" id='userError' style="display:none;">
 				<button type="button" class="close" data-dismiss="alert">×</button>
 				<div id="userErrorTest"></div>
 			</div>
