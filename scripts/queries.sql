@@ -12,3 +12,9 @@ where users.userCategoryID = categories.categoryID and users.userCategoryID>=pro
 select users.userId, users.userName, products.productID, products.productPrice, products.productCategoryID, categories.categoryDiscount
 from users, categories, products
 where users.userCategoryID = categories.categoryID and users.userCategoryID<products.productCategoryID;
+
+--query for graph
+select categories.categoryID,COUNT(products.productCategoryID)
+from orderDetails, products, categories
+where orderDetails.prodId = products.productID and products.productCategoryID = categories.categoryID
+group by categories.categoryID = products.productCategoryID;
