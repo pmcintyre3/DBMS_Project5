@@ -44,7 +44,7 @@ public class UserDAO {
 									+"where users.userID=points.userID");
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				userList.add(new User(rs.getString("userID"), rs
+				userList.add(new User(rs.getInt("userID"), rs
 						.getString("userName"), rs.getInt("userCategoryID"), rs
 						.getBoolean("isAdmin")
 
@@ -97,15 +97,15 @@ public class UserDAO {
 			conn = DriverManager
 					.getConnection(url + dbName, dbUserName, password);
 			pst = conn
-					.prepareStatement("select users.userID as userID,userName,points.userCategoryID as userCategoryID,isAdmin " 
-									 +"from users,points "
-									 +"where users.userID=points.userID "
-									 +"AND userName=?");
+					.prepareStatement("select users.userID as userID,userName,points.userCategoryID as userCategoryID,isAdmin "
+							+ "from users,points "
+							+ "where users.userID=points.userID "
+							+ "AND userName=?");
 			pst.setString(1, userName);
 			rs = pst.executeQuery();
 			while (rs.next()) {
 
-				user = new User(rs.getString("userID"),
+				user = new User(rs.getInt("userID"),
 						rs.getString("userName"), rs.getInt("userCategoryID"),
 						rs.getBoolean("isAdmin"));
 			}
@@ -488,5 +488,54 @@ public class UserDAO {
 		return productList;  
 	}
 
+	public static boolean setUserData(String userName, int userCategoryID, int userID) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		User user = null;
+
+		try {
+			Class.forName(driver).newInstance();
+			conn = DriverManager.getConnection(url + dbName, dbUserName, password);
+
+			pst = conn.prepareStatement("update users set userName=?, userCategoryID=? where userID=?");
+			pst.setString(1, userName);
+			pst.setInt(2, userCategoryID);
+			pst.setInt(3, userID);
+
+			if (pst.executeUpdate() > 0)
+				result = true;
+
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+
+			if (conn != null) {
+				try {
+					conn.close();
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pst != null) {
+				try {
+					pst.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		return result;
+	}
 
 }
