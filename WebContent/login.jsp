@@ -8,7 +8,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Reward Points</title>
+<title>Rewards Points</title>
 
 <!-- Bootstrap core CSS -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,8 +37,7 @@
 		<div class="masthead">
 			<div class="row">
 				<div class="col-md-10">
-					<a href="HomeServlet"><img src="bootstrap/images/logo.png"
-						alt=""></a> <br />
+					 <br />
 				</div>
 				<div class="col-md-2 pull-right"
 					style="padding-left: 2px; font-size: 16px; text-align: right;">

@@ -13,7 +13,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Adidas Reward Program</title>
+<title>Rewards Program</title>
 
 <!-- Bootstrap core CSS -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -53,7 +53,7 @@
 		<div class="masthead">
 			<div class="row">
 				<div class="col-md-10">
-					<a href=""><img src="bootstrap/images/logo.png" alt=""></a> <br />
+					<br />
 				</div>
 				<div class="col-md-2 pull-right"
 					style="padding-left: 2px; font-size: 16px; text-align: right;">
@@ -85,7 +85,7 @@
 										</p>
         								<p>
 											<!-- <a class="btn btn-primary" href="http://localhost:8080/DBMS_Project5/ProductServlet?productID=${article.productID}" role="button">View details &raquo;</a>-->
-        									<a class="btn btn-primary" href="http://localhost:8080/login.jsp" role="button">View
+        									<a class="btn btn-primary" href="http://localhost:8080/DBMS_Project5/login.jsp" role="button">View
         									details &raquo;</a>
         								</p>
 										<c:choose>
