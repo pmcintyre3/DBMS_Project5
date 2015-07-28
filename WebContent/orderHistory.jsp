@@ -52,8 +52,7 @@
 		<div class="masthead">
 			<div class="row">
 				<div class="col-md-9">
-					<a href="index.html"><img src="bootstrap/images/logo.png"
-						alt=""></a> <br />
+					<br />
 				</div>
 				<div class="col-md-3 pull-right"
 					style="padding-left: 2px; font-size: 16px; text-align: right;">

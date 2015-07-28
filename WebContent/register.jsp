@@ -37,8 +37,7 @@
 		<div class="masthead">
 			<div class="row">
 				<div class="col-md-10">
-					<a href="HomeServlet"><img src="bootstrap/images/logo.png"
-						alt=""></a> <br />
+					<br />
 				</div>
 				<div class="col-md-2 pull-right"
 					style="padding-left: 2px; font-size: 16px; text-align: right;">
@@ -68,7 +67,7 @@
 							<% String login_msg=(String)request.getAttribute("error");
 								if(login_msg!=null){ 
 									out.println("<div class='alert alert-dismissible alert-danger'>"
-												+"<button type='button' class='close' data-dismiss='alert'>×</button>"
+												+"<button type='button' class='close' data-dismiss='alert'>x</button>"
 												+login_msg+".</div>");
 								}
 							%>
