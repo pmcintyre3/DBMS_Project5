@@ -27,7 +27,6 @@ accumulated again.
 	|   .gitignore
 	|   DBMS_Project5.iml
 	|   README.md
-	|   tree.txt
 	|   
 	+---Diagrams
 	|       3NF.png
@@ -37,7 +36,7 @@ accumulated again.
 	|       Project 5 presentation.pdf
 	|       Project 5 presentation.pptx
 	|       schema.png
-	|       UMLFINAL.png
+	|       UML.png
 	|                       
 	+---scripts
 	|       dbmsProject5.sql
@@ -116,9 +115,6 @@ accumulated again.
 			|       |       User.class
 			|       |       UserOrder.class
 			|       |       
-			|       +---scripts
-			|       |       createTable.sql
-			|       |       
 			|       \---servlet
 			|               AdminServlet.class
 			|               HomeServlet.class
@@ -137,4 +133,18 @@ accumulated again.
 					servlet-api.jar
 ```
 
+#### Contents
+* diagrams: UML diagrams and the PowerPoint with diagrams
+* doc: Reviews and attendance schedules
+* scripts: SQL scripts for the database
+* src: Contains .java servlets and DAOs
+* WebContent: Contains web pages and scripts, as well as compiled .class files
 
+## Execution
+To run the website, follow these instructions:
+1. Run the SQL scripts to create the database
+2. Add the WebContent to your Tomcat webapps folder and rename it to "DBMS_Project5"
+3. Ensure the phpmyadmin username and password are both "root"
+4. Go to http://localhost:8080/DBMS_Project5 to run the index page
+5. Any changes to the java code must be compiled and added to the webapps/DBMS_Project5/WEB-INF/classes folder
+This may require restarting the Tomcat server.
