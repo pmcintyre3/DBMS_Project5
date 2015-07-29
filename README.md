@@ -141,10 +141,10 @@ accumulated again.
 * WebContent: Contains web pages and scripts, as well as compiled .class files
 
 ## Execution
-To run the website, follow these instructions:
-1. Run the SQL scripts to create the database
-2. Add the WebContent to your Tomcat webapps folder and rename it to "DBMS_Project5"
-3. Ensure the phpmyadmin username and password are both "root"
-4. Go to http://localhost:8080/DBMS_Project5 to run the index page
+To run the website, follow these instructions:  
+1. Run the SQL scripts to create the database  
+2. Add the WebContent to your Tomcat webapps folder and rename it to "DBMS_Project5"  
+3. Ensure the phpmyadmin username and password are both "root"  
+4. Go to http://localhost:8080/DBMS_Project5 to run the index page  
 5. Any changes to the java code must be compiled and added to the webapps/DBMS_Project5/WEB-INF/classes folder
-This may require restarting the Tomcat server.
+This may require restarting the Tomcat server.  
